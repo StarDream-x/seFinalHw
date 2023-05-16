@@ -12,6 +12,7 @@ import com.whu.tomado.R;
 import com.whu.tomado.ui.fragment.NodoFragment;
 import com.whu.tomado.ui.fragment.PlaceholderFragment;
 import com.whu.tomado.ui.fragment.ProfileFragment;
+import com.whu.tomado.ui.fragment.TeamFragment;
 import com.whu.tomado.ui.fragment.TodoFragment;
 
 /**
@@ -39,7 +40,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             return new TodoFragment(mContext);
         }else if(position == 1){
             return new NodoFragment();
-        }else if(position == 3){
+        }else if(position == 2){
+            return new TeamFragment(mContext);
+        } else if(position == 3){
             return new ProfileFragment();
         }else{
             return new PlaceholderFragment();
