@@ -1,4 +1,4 @@
-package com.whu.tomado.ui.main;
+package com.whu.tomado.ui.viewmodel;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;

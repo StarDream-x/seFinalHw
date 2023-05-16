@@ -1,4 +1,4 @@
-package com.whu.tomado;
+package com.whu.tomado.ui.activity;
 
 import android.os.Bundle;
 
@@ -9,11 +9,9 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.whu.tomado.ui.main.SectionsPagerAdapter;
+import com.whu.tomado.ui.adapter.SectionsPagerAdapter;
 import com.whu.tomado.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,4 +40,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

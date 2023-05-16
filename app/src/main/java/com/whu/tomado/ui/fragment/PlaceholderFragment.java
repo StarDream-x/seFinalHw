@@ -1,4 +1,4 @@
-package com.whu.tomado.ui.main;
+package com.whu.tomado.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.whu.tomado.R;
 import com.whu.tomado.databinding.FragmentMainBinding;
+import com.whu.tomado.ui.viewmodel.PageViewModel;
 
 /**
  * A placeholder fragment containing a simple view.

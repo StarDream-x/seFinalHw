@@ -1,4 +1,4 @@
-package com.whu.tomado.ui.main;
+package com.whu.tomado.ui.adapter;
 
 import android.content.Context;
 
@@ -9,7 +9,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.whu.tomado.R;
-import com.whu.tomado.ui.pages.TODO;
+import com.whu.tomado.ui.fragment.NodoFragment;
+import com.whu.tomado.ui.fragment.PlaceholderFragment;
+import com.whu.tomado.ui.fragment.ProfileFragment;
+import com.whu.tomado.ui.fragment.TodoFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -33,8 +36,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 //        return PlaceholderFragment.newInstance(position + 1);
         // 根据位置返回对应的 PlaceholderFragment 实例
         if (position == 0) {
-            return new TODO();
-        } else {
+            return new TodoFragment(mContext);
+        }else if(position == 1){
+            return new NodoFragment();
+        }else if(position == 3){
+            return new ProfileFragment();
+        }else{
             return new PlaceholderFragment();
         }
     }
