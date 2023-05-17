@@ -13,7 +13,7 @@
     - activity：目前只包含了主界面。
     - adaptor：负责列表（数组）这种结构的数据
     - fragment：负责具体的页面
-    - viewmodel：我也不知道干啥的
+    - viewmodel：用于保存和管理与UI相关的数据的类
 - 而设计的ui则在res/layout中，通过xml文件设计ui
 
 目前的前端已经基本实现了包括页面切换，输入等功能。后续扩展可以参考已有代码。
