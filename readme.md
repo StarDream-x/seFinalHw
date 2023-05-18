@@ -13,7 +13,7 @@
     - activity：目前只包含了主界面。
     - adaptor：负责列表（数组）这种结构的数据
     - fragment：负责具体的页面
-    - viewmodel：我也不知道干啥的
+    - viewmodel：用于保存和管理与UI相关的数据的类
 - 而设计的ui则在res/layout中，通过xml文件设计ui
 
 目前的前端已经基本实现了包括页面切换，输入等功能。后续扩展可以参考已有代码。
@@ -24,4 +24,4 @@
 
 - 目前前端通过ipv4地址访问后端代码，ipv4地址在res/values/strings.xml中的server_url中，在具体访问时需要按照实际情况进行修改。
 - 如果不清楚某些代码的作用，请交给chatGPT，它比我更清楚(doge)
-- 
+- 在Server/src/main/resources/application.properties中需要将username和password改为本机MySQL的用户名密码，且要创建名为tomado的database，若端口被占用，可修改server.port

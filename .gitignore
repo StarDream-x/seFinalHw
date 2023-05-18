@@ -1,0 +1,9 @@
+.idea:
+
+Client/.idea:
+
+Server/.idea:
+
+Server/src/main/resources/application.properties
+
+Client/app/src/main/res/values/strings.xml
