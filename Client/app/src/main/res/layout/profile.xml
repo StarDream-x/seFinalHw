@@ -27,5 +27,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="帮助" />
+<!--    添加登陆按钮-->
 
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录" />
+
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试" />
 </LinearLayout>
