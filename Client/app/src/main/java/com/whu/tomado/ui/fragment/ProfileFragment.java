@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,57 +57,16 @@ public class ProfileFragment extends Fragment {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url_str = String.valueOf(R.string.server_url);
-                System.out.println(url_str);
-                URL url = null;
+                // 执行异步任务来获取JSON数据
                 try {
-                    url = new URL(url_str);
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
+                    ProfileInterface profileInterface = new ProfileInterface();
+                    profileInterface.execute(getString(R.string.server_url));
+                    String result = profileInterface.get();
+                    Log.d("result", result);
+                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
-
-                // 建立HTTP连接
-                HttpURLConnection urlConnection = null;
-                try {
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    urlConnection.setRequestMethod("GET");
-                } catch (ProtocolException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    urlConnection.connect();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                // 读取输入流
-                InputStream inputStream = null;
-                try {
-                    inputStream = urlConnection.getInputStream();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                StringBuilder buffer = new StringBuilder();
-
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-
-                while (true) {
-                    try {
-                        if ((line = reader.readLine()) == null) break;
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    buffer.append(line).append("\n");
-                }
-
-
-                System.out.println(buffer.toString());
             }
         });
 

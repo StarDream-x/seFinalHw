@@ -40,7 +40,9 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
             itemView = inflater.inflate(R.layout.one_task, parent, false);
         }
         Todo currentTask = getItem(position);
+        // 设置任务完成情况
         CheckBox taskFinishedBox = itemView.findViewById(R.id.taskFinished);
+        taskFinishedBox.setChecked(currentTask.getTaskStatus());
         TextView taskNameTextView = itemView.findViewById(R.id.taskNameTextView);
         TextView taskTimeTextView = itemView.findViewById(R.id.taskTimeTextView);
         TextView taskNotesTextView = itemView.findViewById(R.id.taskNotesTextView);
@@ -77,30 +79,13 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
             // 如果选中，就把任务从任务列表中移除，再添加到任务列表的最后
             todo.setDone(true);
             todoList.remove(todo);
-            todoList.add(todo);
-            // 将当前任务对应的CheckBox设置为未选中状态
-            CheckBox taskFinishedBox = getView(position, null, null).findViewById(R.id.taskFinished);
-            taskFinishedBox.setChecked(false);
-            // 将下面的任务多设置一个为选中状态
-            if (position < unfinishedTaskCount) {
-                taskFinishedBox = getView(position + 1, null, null).findViewById(R.id.taskFinished);
-                taskFinishedBox.setChecked(true);
-            }
-            // 将未完成任务数减一
+            todoList.add(unfinishedTaskCount-1,todo);
             unfinishedTaskCount--;
         } else {
             // 如果未选中，就把任务从任务列表中移除，再添加到任务列表的unfinishedTaskCount位置
             todo.setDone(false);
             todoList.remove(todo);
             todoList.add(unfinishedTaskCount, todo);
-            // 将当前任务对应的CheckBox设置为选中状态
-            CheckBox taskFinishedBox = getView(position, null, null).findViewById(R.id.taskFinished);
-            taskFinishedBox.setChecked(true);
-            // 将下面的任务多设置一个为未选中状态
-            if (position < unfinishedTaskCount) {
-                taskFinishedBox = getView(position + 1, null, null).findViewById(R.id.taskFinished);
-                taskFinishedBox.setChecked(false);
-            }
             unfinishedTaskCount++;
         }
         notifyDataSetChanged();
