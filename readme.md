@@ -1,3 +1,7 @@
+# 提前说明
+
+- 请大家在git 提交的时候首先创建自己的分支，不然容易很混乱
+
 # 项目说明
 
 这是一个前后端分离项目
@@ -23,5 +27,6 @@
 # 注意事项
 
 - 目前前端通过ipv4地址访问后端代码，ipv4地址在res/values/strings.xml中的server_url中，在具体访问时需要按照实际情况进行修改。
-- 如果不清楚某些代码的作用，请交给chatGPT，它比我更清楚(doge)
 - 在Server/src/main/resources/application.properties中需要将username和password改为本机MySQL的用户名密码，且要创建名为tomado的database，若端口被占用，可修改server.port
+
+- 如果不清楚某些代码的作用，请交给chatGPT，它比我更清楚(doge)

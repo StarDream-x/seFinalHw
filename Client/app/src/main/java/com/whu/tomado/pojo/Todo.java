@@ -1,9 +1,19 @@
 package com.whu.tomado.pojo;
 
 public class Todo {
+    private boolean isDone = false;
     private String taskName;
     private String taskTime;
     private String taskNotes;
+
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
 
     public String getTaskName() {
         return taskName;
@@ -33,6 +43,16 @@ public class Todo {
         this.taskName = taskName;
         this.taskTime = taskTime;
         this.taskNotes = taskNotes;
+    }
+
+    //修改任务状态
+    public void setTaskStatus(boolean newstatus) {
+        isDone = newstatus;
+    }
+
+    //获取任务状态，已完成为true
+    public boolean getTaskStatus() {
+        return isDone;
     }
 
     // 示例方法

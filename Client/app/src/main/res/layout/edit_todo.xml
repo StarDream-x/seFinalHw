@@ -28,6 +28,4 @@
         android:layout_height="wrap_content"
         android:hint="加入任务备注" />
 
-
 </LinearLayout>
-

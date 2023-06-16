@@ -3,24 +3,53 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="10dp">
+<!--    在左边添加一个可点击的checkBox-->
 
-    <TextView
-        android:id="@+id/taskNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp" />
+    <!--    当该项内容为空时，不显示-->
 
-    <TextView
-        android:id="@+id/taskTimeTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/taskNotesTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp" />
+
+        <CheckBox
+            android:id="@+id/taskFinished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:clickable="true"
+            android:focusable="false"
+            android:padding="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/taskTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023-6-15"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/taskNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你好"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/taskNotesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你爸爸"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
