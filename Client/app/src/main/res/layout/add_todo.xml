@@ -13,6 +13,23 @@
         android:layout_height="wrap_content"
         android:hint="任务名称" />
 
+    <!-- 任务备注 -->
+    <EditText
+        android:id="@+id/taskNotesEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="加入任务备注" />
+
+    <CheckBox
+        android:id="@+id/taskRepeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:clickable="true"
+        android:focusable="false"
+        android:hint="是否为重复任务"
+        android:padding="4dp" />
+
     <!-- 任务时间 -->
     <TextView
         android:id="@+id/taskTimeTextView"
@@ -21,13 +38,21 @@
         android:hint="选择任务时间"
         android:clickable="true" />
 
-    <!-- 任务备注 -->
+    <!-- 任务周期总数 -->
     <EditText
-        android:id="@+id/taskNotesEditText"
+        android:id="@+id/taskCycleTotEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="加入任务备注" />
+        android:visibility="gone"
+        android:hint="完成的周期数"/>
 
+    <!-- 任务周期 -->
+    <EditText
+        android:id="@+id/taskCycleTimeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:hint="每个周期天数" />
 
 </LinearLayout>
 

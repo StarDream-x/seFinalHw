@@ -20,6 +20,14 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
 
     private int unfinishedTaskCount = 0;
 
+    public int getUnfinishedTaskCount() {
+        return unfinishedTaskCount;
+    }
+
+    public void setUnfinishedTaskCount(int unfinishedTaskCount) {
+        this.unfinishedTaskCount = unfinishedTaskCount;
+    }
+
     public void addUnfinishedTaskCount() {
         unfinishedTaskCount++;
     }
@@ -46,6 +54,17 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         TextView taskNameTextView = itemView.findViewById(R.id.taskNameTextView);
         TextView taskTimeTextView = itemView.findViewById(R.id.taskTimeTextView);
         TextView taskNotesTextView = itemView.findViewById(R.id.taskNotesTextView);
+//        TextView taskCycleTotTextView = itemView.findViewById(R.id.taskCycleTotTextView);
+//        TextView taskCycleTimeTextView = itemView.findViewById(R.id.taskCycleTimeTextView);
+//        TextView taskCycleCountTextView = itemView.findViewById(R.id.taskCycleCountTextView);
+//        TextView taskLastFinishedTextView = itemView.findViewById(R.id.taskLastFinishedTextView);
+        taskNameTextView.setText(currentTask.getTaskName());
+        taskTimeTextView.setText(currentTask.getTaskTime());
+        taskNotesTextView.setText(currentTask.getTaskNotes());
+//        taskCycleTotTextView.setText(currentTask.getTaskCycleTot());
+//        taskCycleTimeTextView.setText(currentTask.getTaskCycleTime());
+//        taskCycleCountTextView.setText(currentTask.getTaskCycleCount());
+//        taskLastFinishedTextView.setText(currentTask.getTaskLastFinished());
 
         taskFinishedBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,14 +80,18 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         if (currentTask.getTaskTime().isEmpty()) {
             taskTimeTextView.setVisibility(View.GONE);
         } else {
+            taskTimeTextView.setVisibility(View.VISIBLE);
             taskTimeTextView.setText(currentTask.getTaskTime());
         }
         // 如果备注为空，不显示（不占用空间）。否则显示
         if (currentTask.getTaskNotes().isEmpty()) {
             taskNotesTextView.setVisibility(View.GONE);
         } else {
+            taskNotesTextView.setVisibility(View.VISIBLE);
             taskNotesTextView.setText(currentTask.getTaskNotes());
         }
+
+        //TODO 显示其他内容
 
         return itemView;
     }
