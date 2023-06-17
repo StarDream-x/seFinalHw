@@ -1,7 +1,6 @@
 package com.whu.tomado.ui.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,14 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.ListView;
-import android.view.View;
 
 
 import androidx.appcompat.app.AlertDialog;
@@ -24,26 +17,22 @@ import androidx.fragment.app.Fragment;
 
 import com.whu.tomado.R;
 import com.whu.tomado.pojo.Nodo;
+import com.whu.tomado.pojo.Todo;
 import com.whu.tomado.ui.adapter.NodoAdapter;
+import com.whu.tomado.ui.utils.NodoTaskViewUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class NodoFragment extends Fragment {
 
-    private ListView nodoListView;
-    private Button addNodoButton;
     private NodoAdapter nodoAdapter;
     private List<Nodo> nodoList;
 
-    private TextView taskTimeTextView;
-    private EditText taskNotesEditText;
-    private EditText taskNameEditText;
-
     private Context context;
 
-    public NodoFragment(){}
+    public NodoFragment() {
+    }
 
     public NodoFragment(Context context) {
         this.context = context;
@@ -53,17 +42,14 @@ public class NodoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nodo, container, false);
 
-        nodoListView = view.findViewById(R.id.nodoListView);
+        ListView nodoListView = view.findViewById(R.id.nodoListView);
 
         // 如果nodoListView为空，则显示提示信息，否则显示任务列表
         nodoListView.setEmptyView(view.findViewById(R.id.nodoEmptyView));
-        addNodoButton = view.findViewById(R.id.addNodoButton);
+        Button addNodoButton = view.findViewById(R.id.addNodoButton);
 
         // 初始化任务列表数据
         nodoList = new ArrayList<>();
-//        nodoList.add("任务1");
-//        nodoList.add("任务2");
-//        nodoList.add("任务3");
 
         // 创建任务列表适配器
         nodoAdapter = new NodoAdapter(requireContext(), nodoList);
@@ -111,50 +97,35 @@ public class NodoFragment extends Fragment {
 
         // 当点击单个item时，弹出一个对话框，显示任务的详细信息
         nodoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // position 参数表示用户点击的项的位置
 
                 // 创建一个edit_nodo对话框
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                // 设置对话框标题
                 builder.setTitle("任务详情");
 
-                // 添加自定义布局
-                View dialogView = getLayoutInflater().inflate(R.layout.edit_nodo, null);
+                // 添加add_nodo布局文件
+                View dialogView = getLayoutInflater().inflate(R.layout.add_nodo, null);
+
+                // 设置对话框显示的View对象
                 builder.setView(dialogView);
-                // 获取布局中的控件
-                taskNameEditText = dialogView.findViewById(R.id.taskNameEditText);
-                //设置text内容
-                taskNameEditText.setText(nodoList.get(position).getTaskName());
 
-                taskTimeTextView = dialogView.findViewById(R.id.taskTimeTextView);
-                //设置text内容
-                taskTimeTextView.setText(nodoList.get(position).getTaskTime());
-
-                taskNotesEditText = dialogView.findViewById(R.id.taskNotesEditText);
-                //设置text内容
-                taskNotesEditText.setText(nodoList.get(position).getTaskNotes());
-
-                taskTimeTextView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDatePicker();
-                    }
-                });
+                NodoTaskViewUtils.setTaskView(dialogView,position,nodoList,context);
 
                 // 添加按钮及点击事件
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // 处理确定按钮点击事件
-                        taskNameEditText = dialogView.findViewById(R.id.taskNameEditText);
-                        taskNotesEditText = dialogView.findViewById(R.id.taskNotesEditText);
-
-                        String taskName = taskNameEditText.getText().toString();
-                        String taskTime = taskTimeTextView.getText().toString();
-                        String taskNotes = taskNotesEditText.getText().toString();
-
-                        setTask(position,taskName,taskTime,taskNotes);
+                        Nodo nodo_old = nodoList.get(position);
+                        Nodo nodo = NodoTaskViewUtils.getAddOrEditNodoInfo(dialogView,context);
+                        if( !nodo_old.getTaskName().equals(nodo.getTaskName()) || !nodo_old.getTaskNotes().equals(nodo.getTaskNotes())
+                                || nodo_old.getTaskRepeat() != nodo.getTaskRepeat() || !nodo_old.getTaskTime().equals(nodo.getTaskTime())
+                                || nodo_old.getTaskCycleTot() != nodo.getTaskCycleTot()) {
+                            setTask(position, nodo);
+                        }
                     }
                 });
                 builder.setNegativeButton("取消", null);
@@ -174,46 +145,23 @@ public class NodoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("添加NODO");
+                builder.setTitle("添加TODO");
 //                builder.setMessage("这是一个弹出页面的示例");
 
                 // 添加自定义布局
                 View dialogView = getLayoutInflater().inflate(R.layout.add_nodo, null);
                 builder.setView(dialogView);
 
-                taskTimeTextView = dialogView.findViewById(R.id.taskTimeTextView);
-                taskTimeTextView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDatePicker();
-                    }
-                });
+                NodoTaskViewUtils.addTaskVIew(dialogView,context);
 
                 // 添加按钮及点击事件
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // 处理确定按钮点击事件
-                        taskNameEditText = dialogView.findViewById(R.id.taskNameEditText);
-                        taskNotesEditText = dialogView.findViewById(R.id.taskNotesEditText);
-
-                        String taskName = taskNameEditText.getText().toString();
-                        String taskTime = taskTimeTextView.getText().toString();
-                        String taskNotes = taskNotesEditText.getText().toString();
-
-                        // taskName为空
-                        if (taskName.isEmpty()) {
-                            // 弹出警告框，警告框内容为"任务名不能为空"，警告框标题为"警告"，警告框按钮为"确定"
-                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("警告");
-                            builder.setMessage("任务名不能为空");
-                            builder.setPositiveButton("确定", null);
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
-                            return;
+                        Nodo nodo = NodoTaskViewUtils.getAddOrEditNodoInfo(dialogView,context);
+                        if(nodo != null) {
+                            addNewTask(nodo);
                         }
-
-                        addNewTask(taskName,taskTime,taskNotes);
                     }
                 });
                 builder.setNegativeButton("取消", null);
@@ -227,9 +175,9 @@ public class NodoFragment extends Fragment {
         });
 
         //某个CheckBox被选中或取消选中时，修改任务状态
-
         return view;
     }
+
 
     // 当点击某个任务时，弹出详情界面
     public void showTaskDetail(int position) {
@@ -238,49 +186,36 @@ public class NodoFragment extends Fragment {
     }
 
     // 修改任务
-    public void modifyTask(int position, String taskName, String taskTime, String taskNotes){
+    public void modifyTask(int position, String taskName, String taskTime, String taskNotes, int taskCycleTot, boolean taskRepeat) {
         nodoList.get(position).setTaskName(taskName);
         nodoList.get(position).setTaskTime(taskTime);
         nodoList.get(position).setTaskNotes(taskNotes);
+        nodoList.get(position).setTaskCycleTot(taskCycleTot);
+//        nodoList.get(position).setTaskCycleTime(taskCycleTime);
+        nodoList.get(position).setTaskRepeat(taskRepeat);
         nodoAdapter.notifyDataSetChanged();
     }
 
     //删除任务
-    public void deleteTask(int position){
+    public void deleteTask(int position) {
         nodoList.remove(position);
         nodoAdapter.notifyDataSetChanged();
     }
 
     // 添加新任务
-    private void addNewTask(String taskName, String taskTime, String taskNotes) {
-        nodoList.add(new Nodo(taskName, taskTime, taskNotes));
+    private void addNewTask(Nodo nodo) {
+//        nodoList.add(nodoAdapter.getUnfinishedTaskCount(), nodo);
+        nodo.setTaskCycleCount(nodo.getTaskCycleTot());
+        nodoList.add(0, nodo);
         nodoAdapter.addUnfinishedTaskCount();
         nodoAdapter.notifyDataSetChanged();
     }
 
     // 设置已有任务
-    private void setTask(int pos ,String taskName, String taskTime, String taskNotes) {
-        nodoList.set(pos,new Nodo(taskName, taskTime, taskNotes));
+    private void setTask(int pos, Nodo nodo) {
+        nodo.setTaskCycleCount(nodo.getTaskCycleTot());
+        nodoList.set(0, nodo);
         nodoAdapter.notifyDataSetChanged();
     }
 
-    // 显示日期选择器
-    private void showDatePicker() {
-        // 获取当前日期
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-        // 创建并显示DatePickerDialog
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                // 更新TextView的文本为选定的日期
-                String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                taskTimeTextView.setText(selectedDate);
-            }
-        }, year, month, dayOfMonth);
-        datePickerDialog.show();
-    }
 }

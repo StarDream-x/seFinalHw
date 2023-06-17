@@ -129,6 +129,7 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
                     todo.setDone(true);
                     todoList.remove(todo);
                     todoList.add(unfinishedTaskCount-1,todo);
+//                    todoList.add(0,todo);
                     unfinishedTaskCount--;
                 }
             }
@@ -137,13 +138,15 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
                 todo.setDone(true);
                 todoList.remove(todo);
                 todoList.add(unfinishedTaskCount-1,todo);
+//                todoList.add(0,todo);
                 unfinishedTaskCount--;
             }
         } else {
             // 如果未选中，就把任务从任务列表中移除，再添加到任务列表的unfinishedTaskCount位置
             todo.setDone(false);
             todoList.remove(todo);
-            todoList.add(unfinishedTaskCount, todo);
+//            todoList.add(unfinishedTaskCount, todo);
+            todoList.add(0, todo);
             unfinishedTaskCount++;
             int cnt=todo.getTaskCycleCount();
             if(todo.getTaskRepeat())

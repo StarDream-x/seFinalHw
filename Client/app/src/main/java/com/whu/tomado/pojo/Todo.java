@@ -8,8 +8,8 @@ public class Todo {
 
     private int taskCycleCount = 0;
     private int taskCycleTot;
-    private String taskLastFinished = "";
-    private int taskCycleTime;
+//    private String taskLastFinished = "";
+//    private int taskCycleTime;
     private boolean taskRepeat;
 
     public boolean isDone() {
@@ -52,13 +52,13 @@ public class Todo {
         this.taskCycleTot = taskCycleTot;
     }
 
-    public int getTaskCycleTime() {
-        return taskCycleTime;
-    }
-
-    public void setTaskCycleTime(int taskCycleTime) {
-        this.taskCycleTime = taskCycleTime;
-    }
+//    public int getTaskCycleTime() {
+//        return taskCycleTime;
+//    }
+//
+//    public void setTaskCycleTime(int taskCycleTime) {
+//        this.taskCycleTime = taskCycleTime;
+//    }
 
     public int getTaskCycleCount() {
         return taskCycleCount;
@@ -68,9 +68,9 @@ public class Todo {
         this.taskCycleCount = taskCycleCount;
     }
 
-    public String getTaskLastFinished() {
-        return taskLastFinished;
-    }
+//    public String getTaskLastFinished() {
+//        return taskLastFinished;
+//    }
 
     public void setTaskRepeat(boolean taskRepeat) {
         this.taskRepeat = taskRepeat;
@@ -80,16 +80,16 @@ public class Todo {
         return taskRepeat;
     }
 
-    public void setTaskLastFinished(String taskLastFinished) {
-        this.taskLastFinished = taskLastFinished;
-    }
+//    public void setTaskLastFinished(String taskLastFinished) {
+//        this.taskLastFinished = taskLastFinished;
+//    }
 
-    public Todo(String taskName, String taskTime, String taskNotes, int taskCycleTot, int taskCycleTime, boolean taskRepeat) {
+    public Todo(String taskName, String taskTime, String taskNotes, int taskCycleTot, boolean taskRepeat) {
         this.taskName = taskName;
         this.taskTime = taskTime;
         this.taskNotes = taskNotes;
         this.taskCycleTot = taskCycleTot;
-        this.taskCycleTime = taskCycleTime;
+//        this.taskCycleTime = taskCycleTime;
         this.taskRepeat = taskRepeat;
     }
 
