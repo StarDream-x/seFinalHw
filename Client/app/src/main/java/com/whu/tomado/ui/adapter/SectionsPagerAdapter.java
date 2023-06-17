@@ -9,11 +9,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.whu.tomado.R;
+import com.whu.tomado.ui.fragment.ClockFragment;
 import com.whu.tomado.ui.fragment.PlaceholderFragment;
 import com.whu.tomado.ui.fragment.ProfileFragment;
 import com.whu.tomado.ui.fragment.TeamFragment;
 import com.whu.tomado.ui.fragment.TodoFragment;
 import com.whu.tomado.ui.fragment.NodoFragment;
+
+import java.time.Clock;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -22,7 +25,7 @@ import com.whu.tomado.ui.fragment.NodoFragment;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4,R.string.tab_text_5};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -41,8 +44,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         }else if(position == 1){
             return new NodoFragment(mContext);
         }else if(position == 2){
+            return new ClockFragment(mContext);
+        }else if(position == 3) {
             return new TeamFragment(mContext);
-        } else if(position == 3){
+        }else if(position == 4){
             return new ProfileFragment();
         }else{
             return new PlaceholderFragment();
@@ -58,6 +63,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show all total pages.
-        return 4;
+        return 5;
     }
 }

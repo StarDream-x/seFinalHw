@@ -14,6 +14,7 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:textSize="24sp"
+        android:textColor="@color/white_pressed"
         android:text="用户名" />
     <!-- 设置按钮 -->
     <LinearLayout

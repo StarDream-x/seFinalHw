@@ -18,6 +18,7 @@
         android:id="@+id/todoEmptyView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:textColor="@color/background"
         android:text="当前暂无任务，请点击下方按钮添加"
         android:layout_centerInParent="true"
         android:textSize="18sp"

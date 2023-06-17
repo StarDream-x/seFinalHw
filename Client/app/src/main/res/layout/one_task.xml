@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/half_background"
     android:padding="10dp">
 <!--    在左边添加一个可点击的checkBox-->
 
@@ -34,6 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2023-6-15"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView

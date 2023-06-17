@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_img7"
     tools:context=".ui.activity.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -22,6 +23,8 @@
 <!--            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />-->
 
         <com.google.android.material.tabs.TabLayout
+            android:background="@color/black_semi"
+            android:alpha="0.7"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
