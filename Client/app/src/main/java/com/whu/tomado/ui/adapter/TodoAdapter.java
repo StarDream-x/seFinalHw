@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.whu.tomado.R;
@@ -54,6 +55,7 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         TextView taskNameTextView = itemView.findViewById(R.id.taskNameTextView);
         TextView taskTimeTextView = itemView.findViewById(R.id.taskTimeTextView);
         TextView taskNotesTextView = itemView.findViewById(R.id.taskNotesTextView);
+        ProgressBar taskProgressBar = itemView.findViewById(R.id.taskPrgressBar);
 //        TextView taskCycleTotTextView = itemView.findViewById(R.id.taskCycleTotTextView);
 //        TextView taskCycleTimeTextView = itemView.findViewById(R.id.taskCycleTimeTextView);
 //        TextView taskCycleCountTextView = itemView.findViewById(R.id.taskCycleCountTextView);
@@ -61,19 +63,26 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         taskNameTextView.setText(currentTask.getTaskName());
         taskTimeTextView.setText(currentTask.getTaskTime());
         taskNotesTextView.setText(currentTask.getTaskNotes());
+        taskProgressBar.setProgress(currentTask.getTaskCycleCount());
 //        taskCycleTotTextView.setText(currentTask.getTaskCycleTot());
 //        taskCycleTimeTextView.setText(currentTask.getTaskCycleTime());
 //        taskCycleCountTextView.setText(currentTask.getTaskCycleCount());
 //        taskLastFinishedTextView.setText(currentTask.getTaskLastFinished());
+
+
+
 
         taskFinishedBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isChecked = ((CheckBox) v).isChecked();
                 // 调用处理选中事件的函数
-                handleCheckBoxClick(currentTask, isChecked, position);
+                handleCheckBoxClick(currentTask, v, isChecked, position);
             }
         });
+
+        int cnt=currentTask.getTaskCycleCount();
+        int tot=currentTask.getTaskCycleTot();
 
         taskNameTextView.setText(currentTask.getTaskName());
         // 如果时间为空，不显示（不占用空间）。否则显示
@@ -91,25 +100,57 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
             taskNotesTextView.setText(currentTask.getTaskNotes());
         }
 
-        //TODO 显示其他内容
+        // 显示其他内容
+        if(currentTask.getTaskRepeat() == false){
+            taskProgressBar.setVisibility(View.GONE);
+        } else {
+            taskProgressBar.setVisibility(View.VISIBLE);
+            taskProgressBar.setProgress(cnt);
+            taskProgressBar.setMax(tot);
+        }
 
         return itemView;
     }
 
-    private void handleCheckBoxClick(Todo todo, boolean isChecked, int position) {
+    private void handleCheckBoxClick(Todo todo, View v, boolean isChecked, int position) {
         // 在这里实现 CheckBox 点击事件的处理逻辑
         if (isChecked) {
             // 如果选中，就把任务从任务列表中移除，再添加到任务列表的最后
-            todo.setDone(true);
-            todoList.remove(todo);
-            todoList.add(unfinishedTaskCount-1,todo);
-            unfinishedTaskCount--;
+            int cnt=todo.getTaskCycleCount();
+            int tot=todo.getTaskCycleTot();
+            if(cnt<tot && todo.getTaskRepeat())
+            {
+                cnt++;
+                todo.setTaskCycleCount(cnt);
+                if(cnt!=tot)
+                    ((CheckBox) v).setChecked(false);
+                else
+                {
+                    todo.setDone(true);
+                    todoList.remove(todo);
+                    todoList.add(unfinishedTaskCount-1,todo);
+                    unfinishedTaskCount--;
+                }
+            }
+            else
+            {
+                todo.setDone(true);
+                todoList.remove(todo);
+                todoList.add(unfinishedTaskCount-1,todo);
+                unfinishedTaskCount--;
+            }
         } else {
             // 如果未选中，就把任务从任务列表中移除，再添加到任务列表的unfinishedTaskCount位置
             todo.setDone(false);
             todoList.remove(todo);
             todoList.add(unfinishedTaskCount, todo);
             unfinishedTaskCount++;
+            int cnt=todo.getTaskCycleCount();
+            if(todo.getTaskRepeat())
+            {
+                cnt=0;
+                todo.setTaskCycleCount(cnt);
+            }
         }
         notifyDataSetChanged();
     }

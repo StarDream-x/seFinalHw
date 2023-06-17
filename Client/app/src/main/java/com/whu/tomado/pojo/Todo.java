@@ -65,7 +65,7 @@ public class Todo {
     }
 
     public void setTaskCycleCount(int taskCycleCount) {
-        this.taskCycleTime = taskCycleCount;
+        this.taskCycleCount = taskCycleCount;
     }
 
     public String getTaskLastFinished() {
