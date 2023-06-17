@@ -16,9 +16,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.whu.tomado.R;
-import com.whu.tomado.Task.ProfileTask;
+import com.whu.tomado.Task.LoginTask;
+import com.whu.tomado.Task.RegisterTask;
 
-public class ProfileFragment extends Fragment implements ProfileTask.OnTaskCompleted {
+public class ProfileFragment extends Fragment implements LoginTask.OnTaskCompleted , RegisterTask.OnTaskCompleted{
 
     private TextView usernameTextView;
     private Button settingsButton;
@@ -39,26 +40,26 @@ public class ProfileFragment extends Fragment implements ProfileTask.OnTaskCompl
         settingsButton = view.findViewById(R.id.settingsButton);
         helpButton = view.findViewById(R.id.helpButton);
         loginButton = view.findViewById(R.id.loginButton);
-        testButton = view.findViewById(R.id.testButton);
+//        testButton = view.findViewById(R.id.testButton);
         // 设置用户名
         setUsername("未登录");
 
         //设置测试按钮点击事件
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 执行异步任务来获取JSON数据
-                try {
-                    ProfileTask profileTask = new ProfileTask(ProfileFragment.this);
-                    profileTask.execute(getString(R.string.server_url));
-                    String result = profileTask.get();
-                    Log.d("result", result);
-                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
+//        testButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // 执行异步任务来获取JSON数据
+//                try {
+//                    ProfileTask profileTask = new ProfileTask(ProfileFragment.this);
+//                    profileTask.execute(getString(R.string.server_url));
+//                    String result = profileTask.get();
+//                    Log.d("result", result);
+//                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         // 设置设置按钮点击事件
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -101,27 +102,7 @@ public class ProfileFragment extends Fragment implements ProfileTask.OnTaskCompl
         // 处理打开帮助界面的逻辑
     }
 
-    //    private void openLogin() {
-//        // 处理打开登录界面的逻辑
-//        // 可以使用对话框或者启动一个新的登录Activity进行登录
-//        // 这里只是示例，具体实现取决于你的项目需求
-//
-//        // 例如，可以使用对话框进行登录
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        builder.setTitle("登录");
-//        builder.setMessage("Please log in to access your profile.");
-//        builder.setPositiveButton("Log In", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                // 处理登录按钮点击事件，这里可以编写实际的登录逻辑
-//
-//                // 假设登录成功后，设置用户名为"John Doe"
-//                setUsername("John Doe");
-//            }
-//        });
-//        builder.setNegativeButton("Cancel", null);
-//        builder.create().show();
-//    }
+
     private void openLogin() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("登录");
@@ -142,11 +123,40 @@ public class ProfileFragment extends Fragment implements ProfileTask.OnTaskCompl
                 // Retrieve the entered username and password
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
+                //如果用户名为空，则提示用户名不能为空
+                if(username.compareTo("") == 0){
+                    Toast.makeText(getActivity(), "用户名不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (password.compareTo("") == 0){
+                    Toast.makeText(getActivity(), "密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    LoginTask loginTask = new LoginTask(ProfileFragment.this);
+                    loginTask.execute(getString(R.string.server_url)+"login?username="+username+"&password="+password);
+//                    loginTask.setParams(username, password);
+                    String result = loginTask.get();
+                    Log.d("result", result);
+                    //如果result为true，则登录成功,否则登录失败
+//                    System.out.println(result);
 
-                // Perform login logic here, e.g., validating credentials
+                    if(result.compareToIgnoreCase("true\n") == 0){
+                        Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
+                        setUsername(username);
+                        isLoggedIn = true;
+                    }else{
+                        Toast.makeText(getActivity(), "登录失败", Toast.LENGTH_SHORT).show();
+                        isLoggedIn = false;
+                    }
 
-                // Assume login is successful for demonstration purposes
-                setUsername(username);
+//                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
+
             }
         });
 
@@ -182,11 +192,53 @@ public class ProfileFragment extends Fragment implements ProfileTask.OnTaskCompl
                 // Retrieve the entered username and password
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
+                //如果用户名为空，则提示用户名不能为空
+                if(username.compareTo("") == 0){
+                    Toast.makeText(getActivity(), "用户名不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (password.compareTo("") == 0){
+                    Toast.makeText(getActivity(), "密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //如果密码不大于6位，则提示密码不能小于6位
+                if(password.length() < 6){
+                    Toast.makeText(getActivity(), "密码不能小于6位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //如果密码大于16位，则提示密码不能大于16位
+                if(password.length() > 16){
+                    Toast.makeText(getActivity(), "密码不能大于16位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //如果密码不包含字母大小写和数字，则提示密码必须包含字母大小写和数字
+                if(!password.matches("^(?=.*[a-z])(?=.*[A-Z]).+$") || !password.matches(".*[0-9].*")){
+                    Toast.makeText(getActivity(), "密码必须包含字母大小写和数字", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                // Perform registration logic here, e.g., creating a new account
+                try {
+                    RegisterTask registerTask = new RegisterTask(ProfileFragment.this);
+                    registerTask.execute(getString(R.string.server_url)+"register?username="+username+"&password="+password);
+//                    loginTask.setParams(username, password);
+                    String result = registerTask.get();
+                    Log.d("result", result);
 
-                // Assume registration is successful for demonstration purposes
-                setUsername(username);
+                    if(result.compareToIgnoreCase("true\n") == 0){
+                        Toast.makeText(getActivity(), "注册成功", Toast.LENGTH_SHORT).show();
+
+
+                    }else{
+                        Toast.makeText(getActivity(), "注册失败", Toast.LENGTH_SHORT).show();
+
+                    }
+
+//                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
 
@@ -200,5 +252,6 @@ public class ProfileFragment extends Fragment implements ProfileTask.OnTaskCompl
     public void onTaskCompleted(String result) {
         // 在此处处理获取到的结果
         Log.d("MainActivity", "Result: " + result);
+
     }
 }
