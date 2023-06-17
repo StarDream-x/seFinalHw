@@ -17,12 +17,12 @@
 
         <CheckBox
             android:id="@+id/taskFinished"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="37dp"
+            android:layout_height="match_parent"
             android:layout_gravity="start"
             android:clickable="true"
             android:focusable="false"
-            android:padding="4dp" />
+            android:padding="4dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +49,17 @@
                 android:layout_height="wrap_content"
                 android:text="你爸爸"
                 android:textSize="14sp" />
+
+            <ProgressBar
+                android:id="@+id/taskPrgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progress="30"
+                android:max="100" />
+
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
