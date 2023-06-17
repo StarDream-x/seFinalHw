@@ -23,7 +23,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
     private TextView usernameTextView;
     private Button settingsButton;
-    private Button helpButton;
+    private Button aboutButton;
 
     private Button loginButton;
 
@@ -38,28 +38,11 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
         View view = inflater.inflate(R.layout.profile, container, false);
         usernameTextView = view.findViewById(R.id.usernameTextView);
         settingsButton = view.findViewById(R.id.settingsButton);
-        helpButton = view.findViewById(R.id.helpButton);
+        aboutButton = view.findViewById(R.id.aboutButton);
         loginButton = view.findViewById(R.id.loginButton);
 //        testButton = view.findViewById(R.id.testButton);
         // 设置用户名
         setUsername("未登录");
-
-        //设置测试按钮点击事件
-//        testButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // 执行异步任务来获取JSON数据
-//                try {
-//                    ProfileTask profileTask = new ProfileTask(ProfileFragment.this);
-//                    profileTask.execute(getString(R.string.server_url));
-//                    String result = profileTask.get();
-//                    Log.d("result", result);
-//                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
 
         // 设置设置按钮点击事件
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +53,8 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
             }
         });
 
-        // 设置帮助按钮点击事件
-        helpButton.setOnClickListener(new View.OnClickListener() {
+        // 设置关于按钮点击事件
+        aboutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 处理帮助按钮点击事件
@@ -99,7 +82,16 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
     }
 
     private void openHelp() {
-        // 处理打开帮助界面的逻辑
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("关于");
+        builder.setMessage("作者：SE7组\n简介：tomado是一个简单而强大的事务管理应用，帮助您管理日常任务和提高工作效率。");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
 
@@ -146,7 +138,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                         setUsername(username);
                         isLoggedIn = true;
                     }else{
-                        Toast.makeText(getActivity(), "登录失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
                         isLoggedIn = false;
                     }
 
@@ -229,7 +221,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
 
                     }else{
-                        Toast.makeText(getActivity(), "注册失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "用户名已存在", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -254,4 +246,5 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
         Log.d("MainActivity", "Result: " + result);
 
     }
+
 }
