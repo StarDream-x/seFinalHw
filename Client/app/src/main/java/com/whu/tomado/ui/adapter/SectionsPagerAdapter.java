@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.whu.tomado.R;
-import com.whu.tomado.ui.fragment.ClockFragment;
+//import com.whu.tomado.ui.fragment.ClockFragment;
 import com.whu.tomado.ui.fragment.PlaceholderFragment;
 import com.whu.tomado.ui.fragment.ProfileFragment;
 import com.whu.tomado.ui.fragment.TeamFragment;
@@ -44,7 +44,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         }else if(position == 1){
             return new NodoFragment(mContext);
         }else if(position == 2){
-            return new ClockFragment(mContext);
+//            return new ClockFragment(mContext);
+            return new TeamFragment(mContext);
         }else if(position == 3) {
             return new TeamFragment(mContext);
         }else if(position == 4){
