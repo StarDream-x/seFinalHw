@@ -16,18 +16,9 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.whu.tomado.R;
-import com.whu.tomado.network.ProfileInterface;
+import com.whu.tomado.Task.ProfileTask;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ProfileTask.OnTaskCompleted {
 
     private TextView usernameTextView;
     private Button settingsButton;
@@ -44,7 +35,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile, container, false);
-
         usernameTextView = view.findViewById(R.id.usernameTextView);
         settingsButton = view.findViewById(R.id.settingsButton);
         helpButton = view.findViewById(R.id.helpButton);
@@ -59,9 +49,9 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 // 执行异步任务来获取JSON数据
                 try {
-                    ProfileInterface profileInterface = new ProfileInterface();
-                    profileInterface.execute(getString(R.string.server_url));
-                    String result = profileInterface.get();
+                    ProfileTask profileTask = new ProfileTask(ProfileFragment.this);
+                    profileTask.execute(getString(R.string.server_url));
+                    String result = profileTask.get();
                     Log.d("result", result);
                     Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
@@ -206,4 +196,9 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    @Override
+    public void onTaskCompleted(String result) {
+        // 在此处处理获取到的结果
+        Log.d("MainActivity", "Result: " + result);
+    }
 }

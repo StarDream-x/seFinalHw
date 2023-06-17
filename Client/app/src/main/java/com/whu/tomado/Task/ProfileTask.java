@@ -1,4 +1,4 @@
-package com.whu.tomado.network;
+package com.whu.tomado.Task;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -10,10 +10,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ProfileInterface extends AsyncTask<String, Void, String> {
+public class ProfileTask extends AsyncTask<String, Void, String> {
     private static final String TAG = "FetchDataAsyncTask";
 
-    public ProfileInterface() {
+    // 定义接口来传递结果
+    public interface OnTaskCompleted {
+        void onTaskCompleted(String result);
+    }
+
+    private OnTaskCompleted listener;
+
+    public ProfileTask(OnTaskCompleted listener) {
+        this.listener = listener;
     }
 
     // 重写doInBackground方法，处理后台执行的任务
@@ -73,9 +81,10 @@ public class ProfileInterface extends AsyncTask<String, Void, String> {
         }
     }
 
+
     @Override
     protected void onPostExecute(String result) {
-        return;
+        listener.onTaskCompleted(result);
     }
 }
 
