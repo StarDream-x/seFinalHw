@@ -18,10 +18,11 @@ import androidx.fragment.app.Fragment;
 import com.whu.tomado.R;
 import com.whu.tomado.pojo.Todo;
 import com.whu.tomado.ui.adapter.TodoAdapter;
-import com.whu.tomado.ui.utils.TaskViewUtils;
+import com.whu.tomado.ui.utils.TodoTaskViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TodoFragment extends Fragment {
 
@@ -112,14 +113,19 @@ public class TodoFragment extends Fragment {
                 // 设置对话框显示的View对象
                 builder.setView(dialogView);
 
-                TaskViewUtils.setTaskView(dialogView,position,todoList,context);
+                TodoTaskViewUtils.setTaskView(dialogView,position,todoList,context);
 
                 // 添加按钮及点击事件
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Todo todo = TaskViewUtils.getAddOrEditTodoInfo(dialogView,context);
-                        setTask(position, todo);
+                        Todo todo_old = todoList.get(position);
+                        Todo todo = TodoTaskViewUtils.getAddOrEditTodoInfo(dialogView,context);
+                        if( !todo_old.getTaskName().equals(todo.getTaskName()) || !todo_old.getTaskNotes().equals(todo.getTaskNotes())
+                            || todo_old.getTaskRepeat() != todo.getTaskRepeat() || !todo_old.getTaskTime().equals(todo.getTaskTime())
+                            || todo_old.getTaskCycleTot() != todo.getTaskCycleTot()) {
+                            setTask(position, todo);
+                        }
                     }
                 });
                 builder.setNegativeButton("取消", null);
@@ -146,13 +152,13 @@ public class TodoFragment extends Fragment {
                 View dialogView = getLayoutInflater().inflate(R.layout.add_todo, null);
                 builder.setView(dialogView);
 
-                TaskViewUtils.addTaskVIew(dialogView,context);
+                TodoTaskViewUtils.addTaskVIew(dialogView,context);
 
                 // 添加按钮及点击事件
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Todo todo = TaskViewUtils.getAddOrEditTodoInfo(dialogView,context);
+                        Todo todo = TodoTaskViewUtils.getAddOrEditTodoInfo(dialogView,context);
                         if(todo != null) {
                             addNewTask(todo);
                         }
@@ -180,12 +186,12 @@ public class TodoFragment extends Fragment {
     }
 
     // 修改任务
-    public void modifyTask(int position, String taskName, String taskTime, String taskNotes, int taskCycleTot, int taskCycleTime, boolean taskRepeat) {
+    public void modifyTask(int position, String taskName, String taskTime, String taskNotes, int taskCycleTot, boolean taskRepeat) {
         todoList.get(position).setTaskName(taskName);
         todoList.get(position).setTaskTime(taskTime);
         todoList.get(position).setTaskNotes(taskNotes);
         todoList.get(position).setTaskCycleTot(taskCycleTot);
-        todoList.get(position).setTaskCycleTime(taskCycleTime);
+//        todoList.get(position).setTaskCycleTime(taskCycleTime);
         todoList.get(position).setTaskRepeat(taskRepeat);
         todoAdapter.notifyDataSetChanged();
     }
@@ -198,14 +204,15 @@ public class TodoFragment extends Fragment {
 
     // 添加新任务
     private void addNewTask(Todo todo) {
-        todoList.add(todoAdapter.getUnfinishedTaskCount(), todo);
+//        todoList.add(todoAdapter.getUnfinishedTaskCount(), todo);
+        todoList.add(0, todo);
         todoAdapter.addUnfinishedTaskCount();
         todoAdapter.notifyDataSetChanged();
     }
 
     // 设置已有任务
     private void setTask(int pos, Todo todo) {
-        todoList.set(pos, todo);
+        todoList.set(0, todo);
         todoAdapter.notifyDataSetChanged();
     }
 

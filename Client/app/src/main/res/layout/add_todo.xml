@@ -44,15 +44,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:hint="完成的周期数"/>
+        android:hint="重复次数"/>
 
-    <!-- 任务周期 -->
-    <EditText
-        android:id="@+id/taskCycleTimeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:hint="每个周期天数" />
+<!--    &lt;!&ndash; 任务周期 &ndash;&gt;-->
+<!--    <EditText-->
+<!--        android:id="@+id/taskCycleTimeEditText"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="gone"-->
+<!--        android:hint="每个周期天数" />-->
 
 </LinearLayout>
 
