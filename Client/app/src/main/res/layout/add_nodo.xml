@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.activity.MainActivity">
+
+    <!-- 任务名称 -->
+    <EditText
+        android:id="@+id/taskNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="任务名称" />
+
+    <!-- 任务时间 -->
+    <TextView
+        android:id="@+id/taskTimeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="选择任务时间"
+        android:clickable="true" />
+
+    <!-- 任务备注 -->
+    <EditText
+        android:id="@+id/taskNotesEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="加入任务备注" />
+
+
+</LinearLayout>
+
