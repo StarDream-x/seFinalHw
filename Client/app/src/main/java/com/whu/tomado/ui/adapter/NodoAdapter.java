@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.graphics.Paint;
 
 import com.whu.tomado.R;
 import com.whu.tomado.pojo.Nodo;
@@ -71,6 +74,21 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
         taskTimeTextView.setText(currentTask.getTaskTime());
         taskNotesTextView.setText(currentTask.getTaskNotes());
         taskProgressBar.setProgress(currentTask.getTaskCycleCount());
+        if(currentTask.getTaskStatus()) {
+            taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+            taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+            taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+            taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            taskNameTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskNotesTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskTimeTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+        }
 //        taskCycleTotTextView.setText(currentTask.getTaskCycleTot());
 //        taskCycleTimeTextView.setText(currentTask.getTaskCycleTime());
 //        taskCycleCountTextView.setText(currentTask.getTaskCycleCount());
@@ -120,10 +138,15 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
     }
 
     private void handleCheckBoxClick(Nodo nodo, View v, boolean isChecked, int position) {
+        View parent = (View) v.getParent();
+        TextView taskNameTextView = parent.findViewById(R.id.taskNameTextView);
+        TextView taskNotesTextView = parent.findViewById(R.id.taskNotesTextView);
+        TextView taskTimeTextView = parent.findViewById(R.id.taskTimeTextView);
         // 在这里实现 CheckBox 点击事件的处理逻辑
         if (isChecked) {
             // 如果选中，就把任务从任务列表中移除，再添加到任务列表的最后
             int cnt=nodo.getTaskCycleCount();
+
             int tot=nodo.getTaskCycleTot();
             if(cnt > 0 && nodo.isTaskRepeat())
             {
@@ -133,12 +156,19 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
                     ((CheckBox) v).setChecked(false);
                     ((CheckBox) v).setButtonDrawable(android.R.drawable.checkbox_off_background);
                 }
-
                 else
                 {
                     nodo.setDone(true);
                     ((CheckBox) v).setChecked(true);
                     ((CheckBox) v).setButtonDrawable(R.drawable.ic_cross);
+
+                    taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                    taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                    taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                    taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
                     nodoList.remove(nodo);
                     nodoList.add(unfinishedTaskCount-1,nodo);
                     unfinishedTaskCount--;
@@ -149,6 +179,14 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
                 nodo.setDone(true);
                 ((CheckBox) v).setChecked(true);
                 ((CheckBox) v).setButtonDrawable(R.drawable.ic_cross);
+
+                taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
                 nodoList.remove(nodo);
                 nodo.setTaskCycleCount(nodo.getTaskCycleTot());
                 nodoList.add(unfinishedTaskCount-1,nodo);
@@ -159,6 +197,14 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             nodo.setDone(false);
             ((CheckBox) v).setChecked(false);
             ((CheckBox) v).setButtonDrawable(android.R.drawable.checkbox_off_background);
+
+            taskNameTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskNotesTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskTimeTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+
             nodoList.remove(nodo);
 //            nodoList.add(unfinishedTaskCount, nodo);
             nodoList.add(0, nodo);

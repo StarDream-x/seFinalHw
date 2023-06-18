@@ -20,21 +20,21 @@
         android:layout_height="40dp"
         android:textColor="@color/background"
         android:text="当前暂无任务，请点击下方按钮添加"
-        android:layout_centerInParent="true"
+        android:textAlignment="center"
         android:textSize="18sp"
         android:layout_weight="1" />
 
     <!-- 添加新任务按钮，要求在页面的底部 -->
     <Button
         android:id="@+id/addNodoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_gravity="bottom"
         android:background="@drawable/rounded_button"
+        android:drawableTop="@drawable/add"
         android:elevation="4dp"
         android:gravity="center"
-        android:paddingTop="16dp"
-        android:drawableTop="@drawable/add" />
+        android:paddingTop="16dp" />
 
 
 </LinearLayout>

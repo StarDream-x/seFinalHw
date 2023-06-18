@@ -1,6 +1,7 @@
 package com.whu.tomado.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,21 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
 //        taskCycleTimeTextView.setText(currentTask.getTaskCycleTime());
 //        taskCycleCountTextView.setText(currentTask.getTaskCycleCount());
 //        taskLastFinishedTextView.setText(currentTask.getTaskLastFinished());
+        if(currentTask.isDone()) {
+            taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+            taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+            taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+            taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            taskNameTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskNotesTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskTimeTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+        }
 
 
 
@@ -113,6 +129,10 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
     }
 
     private void handleCheckBoxClick(Todo todo, View v, boolean isChecked, int position) {
+        View parent = (View) v.getParent();
+        TextView taskNameTextView = parent.findViewById(R.id.taskNameTextView);
+        TextView taskNotesTextView = parent.findViewById(R.id.taskNotesTextView);
+        TextView taskTimeTextView = parent.findViewById(R.id.taskTimeTextView);
         // 在这里实现 CheckBox 点击事件的处理逻辑
         if (isChecked) {
             // 如果选中，就把任务从任务列表中移除，再添加到任务列表的最后
@@ -127,6 +147,14 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
                 else
                 {
                     todo.setDone(true);
+
+                    taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                    taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                    taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                    taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
                     todoList.remove(todo);
                     todoList.add(unfinishedTaskCount-1,todo);
 //                    todoList.add(0,todo);
@@ -136,6 +164,14 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
             else
             {
                 todo.setDone(true);
+
+                taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
                 todoList.remove(todo);
                 todoList.add(unfinishedTaskCount-1,todo);
 //                todoList.add(0,todo);
@@ -144,6 +180,14 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         } else {
             // 如果未选中，就把任务从任务列表中移除，再添加到任务列表的unfinishedTaskCount位置
             todo.setDone(false);
+
+            taskNameTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskNotesTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskTimeTextView.setTextColor(context.getResources().getColor(R.color.black));
+            taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+
             todoList.remove(todo);
 //            todoList.add(unfinishedTaskCount, todo);
             todoList.add(0, todo);

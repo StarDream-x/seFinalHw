@@ -16,7 +16,7 @@
         android:textSize="24sp"
         android:textColor="@color/white_pressed"
         android:text="用户名" />
-    <!-- 设置按钮 -->
+    <!-- 登录按钮 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -31,7 +31,81 @@
             android:drawableLeft="@drawable/login"
             android:gravity="left|center_vertical"
             android:text="登录"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:alpha="0.7"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#808080" />
+
+
+    <!-- 加入团队按钮 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/addTeamButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/add_team"
+            android:gravity="left|center_vertical"
+            android:text="加入团队"
+            android:textSize="20sp"
+            android:alpha="0.7"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#808080" />
+
+    <!-- 创建团队按钮 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/createTeamButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/create_team"
+            android:gravity="left|center_vertical"
+            android:text="创建团队"
+            android:textSize="20sp"
+            android:alpha="0.7"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#808080" />
+
+    <!-- 数据统计按钮 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dataStatiscs"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/data_statistic"
+            android:gravity="left|center_vertical"
+            android:text="数据统计"
+            android:textSize="20sp"
+            android:alpha="0.7"/>
 
     </LinearLayout>
     <View
@@ -54,14 +128,16 @@
             android:drawableLeft="@drawable/help"
             android:gravity="left|center_vertical"
             android:text="关于"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:alpha="0.7"/>
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#808080" />
-    <!-- 登录按钮 -->
+
+    <!-- 设置按钮 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -76,7 +152,31 @@
             android:drawableLeft="@drawable/setting"
             android:gravity="left|center_vertical"
             android:text="设置"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:alpha="0.7"/>
+    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#808080" />
+
+        <!-- 退出登录按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/logout"
+                android:gravity="left|center_vertical"
+                android:text="退出登录"
+                android:textSize="20sp"
+                android:alpha="0.7"/>
 
     </LinearLayout>
 

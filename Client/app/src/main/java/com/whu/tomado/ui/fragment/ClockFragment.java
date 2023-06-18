@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.os.Vibrator;
 import android.app.Service;
+import android.net.Uri;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -146,6 +149,7 @@ public class ClockFragment extends Fragment {
                 startButton.setText("Start");
                 // 播放铃声或执行其他操作以指示番茄钟完成
                 playVibrate(context);
+//                playRing(context);
             }
         }.start();
 
@@ -205,9 +209,16 @@ public class ClockFragment extends Fragment {
         return ret;
     }
 
+    private static void playRing(Context context) {
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone rt = RingtoneManager.getRingtone(context, uri);
+        rt.play();
+//方法可行
+    }
+
     private static void playVibrate(Context context) {
         Vibrator vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
-        long[] vibrationPattern = new long[]{0, 180, 80, 120};
+        long[] vibrationPattern = new long[]{0, 1500, 500, 1500};
         vibrator.vibrate(vibrationPattern, -1);
     }
 }

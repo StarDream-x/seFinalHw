@@ -55,5 +55,4 @@ public class TodoItem {
     @ApiModelProperty("taskRepeat")
     @Type(type = "boolean")
     private boolean taskRepeat;
-
 }

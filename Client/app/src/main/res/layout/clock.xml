@@ -21,22 +21,32 @@
         android:id="@+id/timerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/startButton"
         android:layout_marginBottom="8dp"
         android:clickable="true"
         android:text="00:25:00"
         android:textColor="@color/white_pressed"
-        android:textSize="60sp"/>
+        android:textSize="60sp" />
 
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timerTextView"
+        android:layout_above="@id/midLine"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:text="Start" />
+        android:text="Start"
+        android:alpha="0.7"/>
+
+    <View
+        android:id="@+id/midLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:background="#808080"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/resetButton"
@@ -45,6 +55,7 @@
         android:layout_below="@id/startButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:text="Reset" />
+        android:text="Reset"
+        android:alpha="0.7" />
 
 </RelativeLayout>

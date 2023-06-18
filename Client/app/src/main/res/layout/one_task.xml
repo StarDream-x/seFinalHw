@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="2023-6-15"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/taskNameTextView"
