@@ -1,4 +1,4 @@
-package com.whu.tomado.Task;
+package com.whu.tomado.network.Task;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class RegisterTask extends AsyncTask<String, Void, String> {
+public class AddTodoTask extends AsyncTask<String, Void, String> {
     private static final String TAG = "FetchDataAsyncTask";
 
     // 定义接口来传递结果
@@ -18,9 +18,9 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
         void onTaskCompleted(String result);
     }
 
-    private OnTaskCompleted listener;
+    private AddTodoTask.OnTaskCompleted listener;
 
-    public RegisterTask(OnTaskCompleted listener) {
+    public AddTodoTask(AddTodoTask.OnTaskCompleted listener) {
         this.listener = listener;
     }
 
@@ -36,7 +36,7 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
 
             // 建立HTTP连接
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
+            urlConnection.setRequestMethod("POST");
             urlConnection.connect();
 
             // 读取输入流

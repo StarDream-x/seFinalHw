@@ -4,18 +4,23 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.whu.tomado.R;
+import com.whu.tomado.Task.AddTodoTask;
+import com.whu.tomado.Task.LoginTask;
 import com.whu.tomado.pojo.Todo;
 import com.whu.tomado.ui.adapter.TodoAdapter;
 import com.whu.tomado.ui.utils.TodoTaskViewUtils;
@@ -24,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TodoFragment extends Fragment {
+public class TodoFragment extends Fragment implements AddTodoTask.OnTaskCompleted {
 
     private TodoAdapter todoAdapter;
     private List<Todo> todoList;
@@ -43,6 +48,18 @@ public class TodoFragment extends Fragment {
         View view = inflater.inflate(R.layout.todo, container, false);
 
         ListView todoListView = view.findViewById(R.id.todoListView);
+
+        SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 执行刷新操作
+                // TODO:在这里执行上传服务器的操作
+                Toast.makeText(getActivity(), "上传数据", Toast.LENGTH_LONG).show();
+                // 刷新完成后，调用 setRefreshing(false) 结束刷新状态
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         // 如果todoListView为空，则显示提示信息，否则显示任务列表
         todoListView.setEmptyView(view.findViewById(R.id.todoEmptyView));
@@ -159,9 +176,34 @@ public class TodoFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Todo todo = TodoTaskViewUtils.getAddOrEditTodoInfo(dialogView,context);
+
+
                         if(todo != null) {
                             addNewTask(todo);
                         }
+                        try {
+                            AddTodoTask addtodoTask = new AddTodoTask(TodoFragment.this);
+//                            addtodoTask.execute(getString(R.string.server_url)+"login?username="+username+"&password="+password);
+
+                            String result = addtodoTask.get();
+                            Log.d("result", result);
+                            //如果result为true，则登录成功,否则登录失败
+//                    System.out.println(result);
+
+//                            if(result.compareToIgnoreCase("true\n") == 0){
+//                                Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
+//                                setUsername(username);
+//                                isLoggedIn = true;
+//                            }else{
+//                                Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
+//                                isLoggedIn = false;
+//                            }
+
+//                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
                     }
                 });
                 builder.setNegativeButton("取消", null);
@@ -216,4 +258,8 @@ public class TodoFragment extends Fragment {
         todoAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onTaskCompleted(String result) {
+        Log.d("MainActivity", "Result: " + result);
+    }
 }
