@@ -74,7 +74,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
         taskTimeTextView.setText(currentTask.getTaskTime());
         taskNotesTextView.setText(currentTask.getTaskNotes());
         taskProgressBar.setProgress(currentTask.getTaskCycleCount());
-        if(currentTask.getTaskStatus()) {
+        if(currentTask.isDone()) {
             taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
             taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
             taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
