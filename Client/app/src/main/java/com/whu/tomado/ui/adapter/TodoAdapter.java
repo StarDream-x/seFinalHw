@@ -51,7 +51,7 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         Todo currentTask = getItem(position);
         // 设置任务完成情况
         CheckBox taskFinishedBox = itemView.findViewById(R.id.taskFinished);
-        taskFinishedBox.setChecked(currentTask.getTaskStatus());
+        taskFinishedBox.setChecked(currentTask.isDone());
         TextView taskNameTextView = itemView.findViewById(R.id.taskNameTextView);
         TextView taskTimeTextView = itemView.findViewById(R.id.taskTimeTextView);
         TextView taskNotesTextView = itemView.findViewById(R.id.taskNotesTextView);
@@ -101,7 +101,7 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         }
 
         // 显示其他内容
-        if(currentTask.getTaskRepeat() == false){
+        if(currentTask.isTaskRepeat() == false){
             taskProgressBar.setVisibility(View.GONE);
         } else {
             taskProgressBar.setVisibility(View.VISIBLE);
@@ -118,7 +118,7 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
             // 如果选中，就把任务从任务列表中移除，再添加到任务列表的最后
             int cnt=todo.getTaskCycleCount();
             int tot=todo.getTaskCycleTot();
-            if(cnt<tot && todo.getTaskRepeat())
+            if(cnt<tot && todo.isTaskRepeat())
             {
                 cnt++;
                 todo.setTaskCycleCount(cnt);
@@ -149,7 +149,7 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
             todoList.add(0, todo);
             unfinishedTaskCount++;
             int cnt=todo.getTaskCycleCount();
-            if(todo.getTaskRepeat())
+            if(todo.isTaskRepeat())
             {
                 cnt=0;
                 todo.setTaskCycleCount(cnt);

@@ -20,7 +20,7 @@ public class TodoService {
     TodoJPARepository todoRepository;
 
     public TodoItem addTodo(TodoItem todo) {
-        return todoRepository.saveAndFlush(todo);
+        return todoRepository.save(todo);
     }
 
     public TodoItem getTodo(long id) {

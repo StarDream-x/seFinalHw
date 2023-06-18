@@ -9,10 +9,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.whu.tomado.R;
 import com.whu.tomado.pojo.Todo;
+import com.whu.tomado.ui.adapter.TodoAdapter;
 
 import java.util.Calendar;
 import java.util.List;
@@ -65,8 +67,8 @@ public class TodoTaskViewUtils {
 //        taskCycleTimeEditText = dialogView.findViewById(R.id.taskCycleTimeEditText);
 
         taskRepeatCheckBox = dialogView.findViewById(R.id.taskRepeat);
-        taskRepeatCheckBox.setChecked(todoList.get(position).getTaskRepeat());
-        if (todoList.get(position).getTaskRepeat()) {
+        taskRepeatCheckBox.setChecked(todoList.get(position).isTaskRepeat());
+        if (todoList.get(position).isTaskRepeat()) {
             taskCycleTotEditText.setText(todoList.get(position).getTaskCycleTot() + "");
 //            taskCycleTimeEditText.setText(todoList.get(position).getTaskCycleTime() + "");
 
@@ -102,7 +104,7 @@ public class TodoTaskViewUtils {
     }
 
     // 获取对应Todo的详细信息
-    public static Todo getAddOrEditTodoInfo(View dialogView, Context context){
+    public static Todo getAddOrEditTodoInfo(View dialogView, Context context, Todo old_todo){
         // 处理确定按钮点击事件
         taskNameEditText = dialogView.findViewById(R.id.taskNameEditText);
         taskNotesEditText = dialogView.findViewById(R.id.taskNotesEditText);
@@ -131,7 +133,12 @@ public class TodoTaskViewUtils {
         if (taskCycleTot == -1) return null;
 //        int taskCycleTime = toInt(taskCycleTime_string, taskRepeat, "每个周期天数应为正整数",context);
 //        if (taskCycleTime == -1) return null;
-        return new Todo(taskName, taskTime, taskNotes, taskCycleTot, taskRepeat);
+        old_todo.setTaskName(taskName);
+        old_todo.setTaskTime(taskTime);
+        old_todo.setTaskNotes(taskNotes);
+        old_todo.setTaskCycleTot(taskCycleTot);
+        old_todo.setTaskRepeat(taskRepeat);
+        return old_todo;
     }
 
 
