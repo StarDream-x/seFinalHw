@@ -69,6 +69,4 @@ public class TodoController {
         todoService.deleteTodo(id);
         return ResponseEntity.ok().build();
     }
-
-
 }
