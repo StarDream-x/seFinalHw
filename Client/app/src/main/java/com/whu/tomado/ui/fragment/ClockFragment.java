@@ -30,14 +30,19 @@ public class ClockFragment extends Fragment {
         this.context = context;
     }
 
+    // 重置计时器
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 为fragment加载布局
         View view = inflater.inflate(R.layout.clock, container, false);
 
+        // 获取布局中的控件
         timerTextView = view.findViewById(R.id.timerTextView);
+        // 设置开始按钮
         startButton = view.findViewById(R.id.startButton);
 
+        // 设置开始按钮的点击事件
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,11 +54,14 @@ public class ClockFragment extends Fragment {
             }
         });
 
+        // 设置重置按钮
         resetTimer();
         return view;
     }
 
+    // 开始计时器
     private void startTimer() {
+        // 创建一个新的倒计时计时器
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -69,6 +77,7 @@ public class ClockFragment extends Fragment {
             }
         }.start();
 
+        // 计时器正在运行
         isTimerRunning = true;
         startButton.setText("Pause");
     }
@@ -79,6 +88,7 @@ public class ClockFragment extends Fragment {
         startButton.setText("Start");
     }
 
+    // 重置计时器
     private void resetTimer() {
         timeLeftInMillis = START_TIME_IN_MILLIS;
         updateTimerText();
@@ -86,6 +96,7 @@ public class ClockFragment extends Fragment {
         startButton.setText("Start");
     }
 
+    // 将剩余时间转换为格式化的字符串，并将其设置为TextView的文本
     private void updateTimerText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;

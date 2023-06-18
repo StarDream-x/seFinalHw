@@ -1,4 +1,4 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#2000ffff" /> <!-- 设置为透明 -->
+    <solid android:color="@color/white_pressed" /> <!-- 设置为透明 -->
     <corners android:radius="13dp" /> <!-- 更改"20dp"为你想要的圆角半径 -->
 </shape>

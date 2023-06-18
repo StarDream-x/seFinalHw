@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">tomado</string>
+    <string name="server_url">http://192.168.43.77:8014/hello</string>
+    <string name="tab_text_1">Todo</string>
+    <string name="tab_text_2">Nodo</string>
+    <string name="tab_text_3">番茄钟</string>
+    <string name="tab_text_4">团队协作</string>
+    <string name="tab_text_5">我的</string>
+
+
+    <!-- button -->
+    <string name="btn_start">开始</string>
+    <string name="btn_pause">暂停</string>
+    <string name="btn_resume">继续</string>
+    <string name="btn_stop">放弃</string>
+    <string name="btn_skip">略过</string>
+
+    <string name="scene_title_work">开始工作</string>
+    <string name="scene_title_break">开始休息</string>
+
+    <string name="scene_work">工作</string>
+    <string name="scene_short_break">短时休息</string>
+    <string name="scene_long_break">长时休息</string>
+
+    <string name="amount_durations">番茄总时间 %1$d 分钟</string>
+    <string name="stage_time_unit">%1$d 分钟</string>
+    <string name="time_unit">分钟</string>
+
+
+    <!-- 通知 -->
+    <string name="notification_focus">番茄工作中</string>
+    <string name="notification_focus_pause">番茄暂停中</string>
+    <string name="notification_break">正在休息</string>
+    <string name="notification_break_pause">休息暂停中</string>
+    <string name="notification_time_left">还剩</string>
+    <string name="notification_finish">放下工作，准备休息</string>
+    <string name="notification_finish_content">已经完成一个番茄钟，休息一下吧！</string>
+    <string name="notification_break_finish">休息结束</string>
+    <string name="notification_break_finish_content">休息结束，开启下一个番茄钟吧！</string>
+
+    <!-- 设置 -->
+    <string name="pref_title_tick_title">定时器设置</string>
+    <string name="pref_title_work_length">番茄钟时长</string>
+    <string name="pref_title_short_break">休息时长</string>
+    <string name="pref_title_long_break">长休息时长</string>
+    <string name="pref_title_long_break_frequency">长休息间隔</string>
+    <string name="pref_title_frequency_value">%1$d 个番茄</string>
+    <string name="pref_title_time_value">%1$d 分钟</string>
+
+    <string name="pref_title_pomodoro_element">番茄元素</string>
+    <string name="pref_title_pomodoro_mode">番茄模式</string>
+    <string name="pref_title_pomodoro_mode_summary">在番茄模式下不能暂停定时器</string>
+    <string name="pref_title_infinity_mode">自动模式</string>
+    <string name="pref_title_infinity_mode_summary">自动开始下一个番茄钟</string>
+    <string name="pref_title_ticking_sound">滴答声</string>
+    <string name="pref_title_ticking_sound_summary">在番茄钟工作期间，持续的滴答声</string>
+
+    <string name="pref_title_notifications">提示</string>
+    <string name="pref_title_use_notification">完成后提示</string>
+    <string name="pref_title_notification_sound">提示音</string>
+    <string name="pref_title_notification_vibrate">震动</string>
+
+    <string name="pref_title_advanced">高级</string>
+    <string name="pref_title_screen_on">屏幕常亮</string>
+    <string name="pref_title_screen_on_summary">仅针对主界面，在番茄钟期间保持屏幕常亮</string>
+    <string name="pref_title_check_update">检查更新</string>
+
+    <string name="schedule_today_title">今日数据</string>
+    <string name="schedule_amount_title">累计数据</string>
+    <string name="schedule_durations">番茄时间</string>
+    <string name="schedule_times">番茄次数</string>
+    <string name="schedule_done">完成次数</string>
+    <string name="schedule_amount_summary">注意：卸载应用，累计数据将重新计算!</string>
+    <string name="toast_tick_sound_on">白噪音已开启</string>
+    <string name="toast_tick_sound_off">白噪音已关闭</string>
+</resources>
