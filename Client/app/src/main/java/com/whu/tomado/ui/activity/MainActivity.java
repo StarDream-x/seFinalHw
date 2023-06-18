@@ -2,6 +2,7 @@ package com.whu.tomado.ui.activity;
 
 import android.os.Bundle;
 
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -13,6 +14,7 @@ import android.view.View;
 
 import com.whu.tomado.ui.adapter.SectionsPagerAdapter;
 import com.whu.tomado.databinding.ActivityMainBinding;
+import com.whu.tomado.utils.Global;
 
 
 public class MainActivity extends AppCompatActivity {
