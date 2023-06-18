@@ -1,49 +1,40 @@
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/swipeRefreshLayout"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.activity.MainActivity">
 
-    <!-- 添加其他视图或布局 -->
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <!-- 任务列表 -->
+    <ListView
+        android:id="@+id/todoListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        tools:context=".ui.activity.MainActivity">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <!-- 任务列表 -->
-        <ListView
-            android:id="@+id/todoListView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+    <!--    todoEmptyView，要求在页面上方的中心-->
+    <TextView
+        android:id="@+id/todoEmptyView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/background"
+        android:text="当前暂无任务，请点击下方按钮添加"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_weight="1" />
 
-        <!--    todoEmptyView，要求在页面上方的中心-->
-        <TextView
-            android:id="@+id/todoEmptyView"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:text="当前暂无任务，请点击下方按钮添加"
-            android:textColor="@color/background"
-            android:textSize="18sp" />
-
-        <!-- 添加新任务按钮，要求在页面的底部 -->
-        <Button
-            android:id="@+id/addTodoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@drawable/rounded_button"
-            android:drawableTop="@drawable/add"
-            android:elevation="4dp"
-            android:gravity="center"
-            android:paddingTop="16dp" />
+    <!-- 添加新任务按钮，要求在页面的底部 -->
+    <Button
+        android:id="@+id/addTodoButton"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/rounded_button"
+        android:drawableTop="@drawable/add"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:paddingTop="16dp" />
 
 
-    </LinearLayout>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

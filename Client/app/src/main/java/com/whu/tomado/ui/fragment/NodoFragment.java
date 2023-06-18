@@ -145,7 +145,7 @@ public class NodoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("添加TODO");
+                builder.setTitle("添加NODO");
 //                builder.setMessage("这是一个弹出页面的示例");
 
                 // 添加自定义布局
