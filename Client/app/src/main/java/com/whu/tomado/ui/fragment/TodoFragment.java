@@ -105,6 +105,7 @@ public class TodoFragment extends Fragment implements AddTodoTask.OnTaskComplete
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 处理确定按钮点击事件
+                        
                         todoList.remove(position);
                         todoAdapter.notifyDataSetChanged();
                     }
