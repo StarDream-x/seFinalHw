@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
@@ -29,4 +30,12 @@ public class ProfileItem {
 
     @ApiModelProperty("密码")
     String password;
+
+    @Value("0")
+    @ApiModelProperty("ManageTeams")
+    String ManageTeams;
+
+    @Value("0")
+    @ApiModelProperty("MemTeams")
+    String MemTeams;
 }

@@ -5,11 +5,15 @@ import com.whu.tomadoserver.service.TodoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hiroxzwang
@@ -33,6 +37,18 @@ public class TodoController {
             return ResponseEntity.ok(result);
         }
     }
+    //根据userId查询待办事项
+    // get: localhost:8088/todos/user/1
+    @ApiOperation("根据userId查询待办事项")
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<TodoItem>> getTodoByUserId(@ApiParam("用户Id")@PathVariable long userId){
+        List<TodoItem> result = todoService.getTodoByUserId(userId);
+        if(result==null) {
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.ok(result);
+        }
+    }
 
     // get: localhost:8088/todos
     // get: localhost:8088/todos?name=作业
@@ -46,12 +62,15 @@ public class TodoController {
 
     @ApiOperation("添加待办事项")
     @PostMapping("")
-    public ResponseEntity<String> addTodo(@RequestBody TodoItem todo){
+    public ResponseEntity<JSONObject> addTodo(@RequestBody TodoItem todo){
         try {
             TodoItem result = todoService.addTodo(todo);
-            return ResponseEntity.ok(""+result.getId());
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", ""+result.getId());
+            return ResponseEntity.ok(jsonObject);
         }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 

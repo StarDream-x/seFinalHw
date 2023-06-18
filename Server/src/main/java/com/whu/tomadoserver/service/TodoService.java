@@ -20,13 +20,15 @@ public class TodoService {
     TodoJPARepository todoRepository;
 
     public TodoItem addTodo(TodoItem todo) {
-        return todoRepository.saveAndFlush(todo);
+        return todoRepository.save(todo);
     }
 
     public TodoItem getTodo(long id) {
         return todoRepository.getById(id);
     }
-
+    public List<TodoItem> getTodoByUserId(long userId) {
+        return todoRepository.getByUserId(userId);
+    }
 
     public void updateTodo(long id, TodoItem todo) {
         todoRepository.save(todo);

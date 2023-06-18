@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2023/6/17 11:34 星期六
  * @description 数据库操作
  */
-public interface ProfileDao extends JpaRepository<ProfileItem, Long>, JpaSpecificationExecutor<ProfileItem> {
+public interface ProfileJPARepository extends JpaRepository<ProfileItem, Long>, JpaSpecificationExecutor<ProfileItem> {
     @Query(value = "select * from profile_item where username = ?1 and password = ?2", nativeQuery = true)
     List<ProfileItem> findByUsernameAndPassword(String username, String password);
 
