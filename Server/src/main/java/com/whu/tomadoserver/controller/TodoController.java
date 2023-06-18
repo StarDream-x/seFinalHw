@@ -39,8 +39,8 @@ public class TodoController {
     // get: localhost:8088/todos?name=作业&&complete=true
     @ApiOperation("根据条件查询待办事项")
     @GetMapping("")
-    public ResponseEntity<List<TodoItem>> findTodos(@ApiParam("待办事项名称")String name, @ApiParam("是否完成")Boolean complete){
-        List<TodoItem> result = todoService.findTodos(name, complete);
+    public ResponseEntity<List<TodoItem>> findTodos(@ApiParam("待办事项名称")String taskName, @ApiParam("是否完成")Boolean isDone){
+        List<TodoItem> result = todoService.findTodos(taskName, isDone);
         return ResponseEntity.ok(result);
     }
 

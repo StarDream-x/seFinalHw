@@ -2,9 +2,10 @@ package com.whu.tomadoserver.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import net.bytebuddy.implementation.bind.annotation.Default;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,6 +24,10 @@ public class TodoItem {
     @Id
     @ApiModelProperty("id")
     long id;
+
+    @Value("0")
+    @ApiModelProperty("userId")
+    long userId;
 
     @ApiModelProperty("isDone")
     private boolean isDone = false;

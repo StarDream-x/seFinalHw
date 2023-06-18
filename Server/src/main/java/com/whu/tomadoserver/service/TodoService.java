@@ -41,10 +41,10 @@ public class TodoService {
         Specification<TodoItem> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
             if (name != null) {
-                predicateList.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+                predicateList.add(criteriaBuilder.like(root.get("taskName"), "%" + name + "%"));
             }
             if ((complete != null)) {
-                predicateList.add(criteriaBuilder.equal(root.get("complete"), complete));
+                predicateList.add(criteriaBuilder.equal(root.get("isDone"), complete));
             }
             Predicate[] predicates = predicateList.toArray(new Predicate[predicateList.size()]);
             return criteriaBuilder.and(predicates);
