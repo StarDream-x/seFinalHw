@@ -33,6 +33,18 @@ public class TodoController {
             return ResponseEntity.ok(result);
         }
     }
+    //根据userId查询待办事项
+    // get: localhost:8088/todos/user/1
+    @ApiOperation("根据userId查询待办事项")
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<TodoItem>> getTodoByUserId(@ApiParam("用户Id")@PathVariable long userId){
+        List<TodoItem> result = todoService.getTodoByUserId(userId);
+        if(result==null) {
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.ok(result);
+        }
+    }
 
     // get: localhost:8088/todos
     // get: localhost:8088/todos?name=作业

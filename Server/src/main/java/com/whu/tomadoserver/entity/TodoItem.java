@@ -2,10 +2,11 @@ package com.whu.tomadoserver.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import net.bytebuddy.implementation.bind.annotation.Default;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description="待办事项实体")
+@ApiModel(description = "待办事项实体")
 public class TodoItem {
 
     @Id
@@ -33,6 +34,7 @@ public class TodoItem {
     long userId;
 
     @ApiModelProperty("isDone")
+    @Type(type = "boolean")
     private boolean isDone = false;
 
     @ApiModelProperty("taskName")
@@ -43,5 +45,15 @@ public class TodoItem {
 
     @ApiModelProperty("taskNotes")
     private String taskNotes;
+
+    @ApiModelProperty("taskCycleTot")
+    private int taskCycleTot;
+
+    @ApiModelProperty("taskCycleCount")
+    private int taskCycleCount;
+
+    @ApiModelProperty("taskRepeat")
+    @Type(type = "boolean")
+    private boolean taskRepeat;
 
 }
