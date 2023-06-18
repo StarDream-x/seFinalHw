@@ -52,6 +52,13 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
         // 设置任务完成情况
         CheckBox taskFinishedBox = itemView.findViewById(R.id.taskFinished);
         taskFinishedBox.setChecked(currentTask.getTaskStatus());
+        if(currentTask.getTaskStatus()){
+            taskFinishedBox.setButtonDrawable(R.drawable.ic_cross);
+        }
+        else{
+            taskFinishedBox.setButtonDrawable(android.R.drawable.checkbox_off_background);
+
+        }
         TextView taskNameTextView = itemView.findViewById(R.id.taskNameTextView);
         TextView taskTimeTextView = itemView.findViewById(R.id.taskTimeTextView);
         TextView taskNotesTextView = itemView.findViewById(R.id.taskNotesTextView);
@@ -122,11 +129,16 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             {
                 cnt--;
                 nodo.setTaskCycleCount(cnt);
-                if(cnt!=0)
+                if(cnt!=0){
                     ((CheckBox) v).setChecked(false);
+                    ((CheckBox) v).setButtonDrawable(android.R.drawable.checkbox_off_background);
+                }
+
                 else
                 {
                     nodo.setDone(true);
+                    ((CheckBox) v).setChecked(true);
+                    ((CheckBox) v).setButtonDrawable(R.drawable.ic_cross);
                     nodoList.remove(nodo);
                     nodoList.add(unfinishedTaskCount-1,nodo);
                     unfinishedTaskCount--;
@@ -135,6 +147,8 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             else
             {
                 nodo.setDone(true);
+                ((CheckBox) v).setChecked(true);
+                ((CheckBox) v).setButtonDrawable(R.drawable.ic_cross);
                 nodoList.remove(nodo);
                 nodo.setTaskCycleCount(nodo.getTaskCycleTot());
                 nodoList.add(unfinishedTaskCount-1,nodo);
@@ -143,6 +157,8 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
         } else {
             // 如果未选中，就把任务从任务列表中移除，再添加到任务列表的unfinishedTaskCount位置
             nodo.setDone(false);
+            ((CheckBox) v).setChecked(false);
+            ((CheckBox) v).setButtonDrawable(android.R.drawable.checkbox_off_background);
             nodoList.remove(nodo);
 //            nodoList.add(unfinishedTaskCount, nodo);
             nodoList.add(0, nodo);
