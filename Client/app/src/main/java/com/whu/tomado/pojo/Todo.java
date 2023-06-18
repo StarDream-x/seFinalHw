@@ -1,10 +1,27 @@
 package com.whu.tomado.pojo;
 
 public class Todo {
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Todo() {
+    }
+
     private boolean isDone = false;
     private String taskName;
     private String taskTime;
     private String taskNotes;
+
+    public boolean isTaskRepeat() {
+        return taskRepeat;
+    }
 
     private int taskCycleCount = 0;
     private int taskCycleTot;

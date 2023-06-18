@@ -18,12 +18,25 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.whu.tomado.R;
-import com.whu.tomado.Task.AddTodoTask;
-import com.whu.tomado.Task.LoginTask;
+import com.whu.tomado.network.Task.AddTodoTask;
+import com.whu.tomado.network.Task.LoginTask;
 import com.whu.tomado.pojo.Todo;
 import com.whu.tomado.ui.adapter.TodoAdapter;
+import com.whu.tomado.ui.utils.MySingleton;
 import com.whu.tomado.ui.utils.TodoTaskViewUtils;
+import com.whu.tomado.utils.Global;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +79,9 @@ public class TodoFragment extends Fragment implements AddTodoTask.OnTaskComplete
         Button addTodoButton = view.findViewById(R.id.addTodoButton);
 
         // 初始化任务列表数据
-        todoList = new ArrayList<>();
+//        todoList = new ArrayList<>();
+
+        todoList = getTodoListById(Global.userID);
 
         // 创建任务列表适配器
         todoAdapter = new TodoAdapter(requireContext(), todoList);
@@ -172,36 +187,16 @@ public class TodoFragment extends Fragment implements AddTodoTask.OnTaskComplete
                 TodoTaskViewUtils.addTaskVIew(dialogView,context);
 
                 // 添加按钮及点击事件
+
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Todo todo = TodoTaskViewUtils.getAddOrEditTodoInfo(dialogView,context);
 
 
+
                         if(todo != null) {
                             addNewTask(todo);
-                        }
-                        try {
-                            AddTodoTask addtodoTask = new AddTodoTask(TodoFragment.this);
-//                            addtodoTask.execute(getString(R.string.server_url)+"login?username="+username+"&password="+password);
-
-                            String result = addtodoTask.get();
-                            Log.d("result", result);
-                            //如果result为true，则登录成功,否则登录失败
-//                    System.out.println(result);
-
-//                            if(result.compareToIgnoreCase("true\n") == 0){
-//                                Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
-//                                setUsername(username);
-//                                isLoggedIn = true;
-//                            }else{
-//                                Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
-//                                isLoggedIn = false;
-//                            }
-
-//                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                        }catch (Exception e){
-                            e.printStackTrace();
                         }
 
                     }
@@ -218,6 +213,59 @@ public class TodoFragment extends Fragment implements AddTodoTask.OnTaskComplete
 
         //某个CheckBox被选中或取消选中时，修改任务状态
         return view;
+    }
+
+    private List<Todo> getTodoListById(long userID) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userId", Global.userID + "");
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url = getString(R.string.server_url)+"todos/user/"+userID;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                                        textView.setText("Response: " + response.toString());
+                        Log.d("editTodo",response.toString());
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("data");
+                            for(int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                Todo todo = new Todo();
+                                todo.setTaskName(jsonObject.getString("taskName"));
+                                todo.setTaskTime(jsonObject.getString("taskTime"));
+                                todo.setTaskNotes(jsonObject.getString("taskNotes"));
+                                todo.setTaskRepeat(jsonObject.getBoolean("taskRepeat"));
+                                todo.setTaskCycleTot(jsonObject.getInt("taskCycleTot"));
+                                todo.setTaskCycleCount(jsonObject.getInt("taskCycleCount"));
+                                todo.setTaskStatus(jsonObject.getBoolean("taskStatus"));
+                                todoList.add(todo);
+                            }
+                            todoAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+//                                        textView.setText("Error:"+error.toString());
+                        Log.e("addTodo",error.toString());
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(TodoFragment.this.context).addToRequestQueue(jsonObjectRequest);
+        RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        requestQueue.add(jsonObjectRequest);
+        return new ArrayList<>();
     }
 
 
@@ -250,12 +298,88 @@ public class TodoFragment extends Fragment implements AddTodoTask.OnTaskComplete
         todoList.add(0, todo);
         todoAdapter.addUnfinishedTaskCount();
         todoAdapter.notifyDataSetChanged();
+        JSONObject jsonObject = new JSONObject();
+        String url = getString(R.string.server_url)+"todos";
+        try{
+            jsonObject.put("userId", Global.userID+"");
+            jsonObject.put("isDone",todo.isDone());
+            jsonObject.put("taskName",todo.getTaskName());
+            jsonObject.put("taskTime",todo.getTaskTime());
+            jsonObject.put("taskNotes",todo.getTaskNotes());
+            jsonObject.put("taskRepeat",todo.getTaskRepeat());
+            jsonObject.put("taskCycleTot",todo.getTaskCycleTot());
+            jsonObject.put("taskCycleCount",todo.getTaskCycleCount());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                                        textView.setText("Response: " + response.toString());
+                        Log.d("addTodo",response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+//                                        textView.setText("Error:"+error.toString());
+                        Log.e("addTodo",error.toString());
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(TodoFragment.this.context).addToRequestQueue(jsonObjectRequest);
+        RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        requestQueue.add(jsonObjectRequest);
     }
 
     // 设置已有任务
     private void setTask(int pos, Todo todo) {
         todoList.set(0, todo);
         todoAdapter.notifyDataSetChanged();
+        JSONObject jsonObject = new JSONObject();
+        String url = getString(R.string.server_url)+"todos";
+        try{
+            jsonObject.put("userId", Global.userID+"");
+            jsonObject.put("isDone",todo.isDone());
+            jsonObject.put("taskName",todo.getTaskName());
+            jsonObject.put("taskTime",todo.getTaskTime());
+            jsonObject.put("taskNotes",todo.getTaskNotes());
+            jsonObject.put("taskRepeat",todo.getTaskRepeat());
+            jsonObject.put("taskCycleTot",todo.getTaskCycleTot());
+            jsonObject.put("taskCycleCount",todo.getTaskCycleCount());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                                        textView.setText("Response: " + response.toString());
+                        Log.d("addTodo",response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+//                                        textView.setText("Error:"+error.toString());
+                        Log.e("addTodo",error.toString());
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(TodoFragment.this.context).addToRequestQueue(jsonObjectRequest);
+        RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        requestQueue.add(jsonObjectRequest);
     }
 
     @Override

@@ -146,8 +146,10 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                         Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
                         setUsername(username);
                         isLoggedIn = true;
+                        System.out.println(result);
                         long userId=Long.parseLong(result.split(" ")[0]);
                         Global.userID= userId;
+//                        Toast.makeText(getActivity(), "用户ID为"+userId, Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
                         isLoggedIn = false;
