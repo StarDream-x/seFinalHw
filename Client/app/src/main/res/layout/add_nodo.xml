@@ -11,7 +11,7 @@
         android:id="@+id/taskNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="任务名称" />
+        android:hint="任务名称"/>
 
     <!-- 任务备注 -->
     <EditText
@@ -44,7 +44,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:hint="重复次数"/>
+        android:hint="重复次数"
+        android:digits="0123456789"
+        android:inputType="number"/>
 
     <!--    &lt;!&ndash; 任务周期 &ndash;&gt;-->
     <!--    <EditText-->
