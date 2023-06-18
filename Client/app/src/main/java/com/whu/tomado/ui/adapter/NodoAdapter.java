@@ -51,8 +51,8 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
         Nodo currentTask = getItem(position);
         // 设置任务完成情况
         CheckBox taskFinishedBox = itemView.findViewById(R.id.taskFinished);
-        taskFinishedBox.setChecked(currentTask.getTaskStatus());
-        if(currentTask.getTaskStatus()){
+        taskFinishedBox.setChecked(currentTask.isDone());
+        if(currentTask.isDone()){
             taskFinishedBox.setButtonDrawable(R.drawable.ic_cross);
         }
         else{
@@ -108,7 +108,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
         }
 
         // 显示其他内容
-        if(currentTask.getTaskRepeat() == false){
+        if(currentTask.isTaskRepeat() == false){
             taskProgressBar.setVisibility(View.GONE);
         } else {
             taskProgressBar.setVisibility(View.VISIBLE);
@@ -125,7 +125,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             // 如果选中，就把任务从任务列表中移除，再添加到任务列表的最后
             int cnt=nodo.getTaskCycleCount();
             int tot=nodo.getTaskCycleTot();
-            if(cnt > 0 && nodo.getTaskRepeat())
+            if(cnt > 0 && nodo.isTaskRepeat())
             {
                 cnt--;
                 nodo.setTaskCycleCount(cnt);
@@ -164,7 +164,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             nodoList.add(0, nodo);
             unfinishedTaskCount++;
             int cnt=nodo.getTaskCycleCount();
-            if(nodo.getTaskRepeat())
+            if(nodo.isTaskRepeat())
             {
                 cnt=nodo.getTaskCycleTot();
                 nodo.setTaskCycleCount(cnt);

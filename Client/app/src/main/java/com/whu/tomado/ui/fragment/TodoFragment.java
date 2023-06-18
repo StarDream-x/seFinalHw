@@ -124,8 +124,6 @@ public class TodoFragment extends Fragment implements AddTodoTask.OnTaskComplete
 
                         // Access the RequestQueue through your singleton class.
                         MySingleton.getInstance(TodoFragment.this.context).addToRequestQueue(jsonArrayRequest);
-                        RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
-                        requestQueue.add(jsonArrayRequest);
 
                         todoList.remove(position);
                         todoAdapter.notifyDataSetChanged();
