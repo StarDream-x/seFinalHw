@@ -18,6 +18,9 @@ import androidx.fragment.app.Fragment;
 import com.whu.tomado.R;
 import com.whu.tomado.Task.LoginTask;
 import com.whu.tomado.Task.RegisterTask;
+import com.whu.tomado.utils.Global;
+
+import java.util.Locale;
 
 public class ProfileFragment extends Fragment implements LoginTask.OnTaskCompleted , RegisterTask.OnTaskCompleted{
 
@@ -133,10 +136,13 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                     //如果result为true，则登录成功,否则登录失败
 //                    System.out.println(result);
 
-                    if(result.compareToIgnoreCase("true\n") == 0){
+                    //如果result中包含true，则登录成功，否则登录失败
+                    if(result.toLowerCase().contains("true")){
                         Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
                         setUsername(username);
                         isLoggedIn = true;
+                        long userId=Long.parseLong(result.split(" ")[0]);
+                        Global.userID= userId;
                     }else{
                         Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
                         isLoggedIn = false;

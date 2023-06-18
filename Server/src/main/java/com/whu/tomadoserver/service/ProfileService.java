@@ -22,7 +22,7 @@ public class ProfileService {
         if (profiles == null || profiles.size() == 0) {
             return "False";
         } else {
-            return "True";
+            return profiles.get(0).getUserId()+" True";
         }
     }
 
