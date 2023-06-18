@@ -16,8 +16,8 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.whu.tomado.R;
-import com.whu.tomado.Task.LoginTask;
-import com.whu.tomado.Task.RegisterTask;
+import com.whu.tomado.network.Task.LoginTask;
+import com.whu.tomado.network.Task.RegisterTask;
 
 public class ProfileFragment extends Fragment implements LoginTask.OnTaskCompleted , RegisterTask.OnTaskCompleted{
 

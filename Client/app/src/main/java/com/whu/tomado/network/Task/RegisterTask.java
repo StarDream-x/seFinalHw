@@ -1,4 +1,5 @@
-package com.whu.tomado.Task;
+package com.whu.tomado.network.Task;
+
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -6,10 +7,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-public class LoginTask extends AsyncTask<String, Void, String>{
+
+public class RegisterTask extends AsyncTask<String, Void, String> {
     private static final String TAG = "FetchDataAsyncTask";
 
     // 定义接口来传递结果
@@ -17,9 +18,9 @@ public class LoginTask extends AsyncTask<String, Void, String>{
         void onTaskCompleted(String result);
     }
 
-    private LoginTask.OnTaskCompleted listener;
+    private OnTaskCompleted listener;
 
-    public LoginTask(LoginTask.OnTaskCompleted listener) {
+    public RegisterTask(OnTaskCompleted listener) {
         this.listener = listener;
     }
 
@@ -36,15 +37,6 @@ public class LoginTask extends AsyncTask<String, Void, String>{
             // 建立HTTP连接
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-//            urlConnection.setRequestProperty("Content-Type", "application/json");
-//            urlConnection.setDoOutput(true);
-//            String requestBody = "{\"key\":\"value\"}"; // Replace with your actual request data
-//            OutputStream outputStream = urlConnection.getOutputStream();
-//            outputStream.write(requestBody.getBytes("UTF-8"));
-//            outputStream.close();
-            // 为该get请求加入username和password参数
-//            urlConnection.setRequestProperty("username", params[1]);
-//            urlConnection.setRequestProperty("password", params[2]);
             urlConnection.connect();
 
             // 读取输入流
@@ -95,3 +87,4 @@ public class LoginTask extends AsyncTask<String, Void, String>{
         listener.onTaskCompleted(result);
     }
 }
+

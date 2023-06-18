@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.whu.tomado.R;
 import com.whu.tomado.pojo.Todo;
@@ -43,6 +45,18 @@ public class TodoFragment extends Fragment {
         View view = inflater.inflate(R.layout.todo, container, false);
 
         ListView todoListView = view.findViewById(R.id.todoListView);
+
+        SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 执行刷新操作
+                // TODO:在这里执行上传服务器的操作
+                Toast.makeText(getActivity(), "上传数据", Toast.LENGTH_LONG).show();
+                // 刷新完成后，调用 setRefreshing(false) 结束刷新状态
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         // 如果todoListView为空，则显示提示信息，否则显示任务列表
         todoListView.setEmptyView(view.findViewById(R.id.todoEmptyView));
