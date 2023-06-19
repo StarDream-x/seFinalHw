@@ -386,6 +386,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
             // 将适配器设置给ListView
             todoListView.setAdapter(todoAdapter);
             todoAdapter.setTmType(tmType);
+            todoAdapter.setTmid(tmid);
 
             backButton.setOnClickListener(new View.OnClickListener() {
                 @Override
