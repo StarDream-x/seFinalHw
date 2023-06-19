@@ -173,7 +173,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                                     ch = mTeams.charAt(i);
                                     if(ch>=48&&ch<=57) {x=(x<<3)+(x<<1)+ch-48;flag=true;}
                                     else{
-                                        if(!checkTeamExist(x)){
+                                        if(flag&&(!checkTeamExist(x))){
                                             Team team = new Team();
                                             team.setId(x);team.setType(1);
                                             team.setDesc("我管理的");
@@ -195,7 +195,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                                     ch = mTeams.charAt(i);
                                     if(ch>=48&&ch<=57) {x=(x<<3)+(x<<1)+ch-48;flag=true;}
                                     else{
-                                        if(!checkTeamExist(x)){
+                                        if(flag&&(!checkTeamExist(x))){
                                             Team team = new Team();
                                             team.setId(x);team.setType(2);
                                             team.setDesc("我加入的");
@@ -351,6 +351,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
         if(mode == 1){
             view.findViewById(R.id.todoEmptyView).setVisibility(View.INVISIBLE);
             view.findViewById(R.id.addTodoButton).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.backButton).setVisibility(View.INVISIBLE);
 
             teamList = new ArrayList<>();
             getTeamListById(Global.userID);
@@ -373,8 +374,10 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
             // 如果todoListView为空，则显示提示信息，否则显示任务列表
             todoListView.setEmptyView(view.findViewById(R.id.todoEmptyView));
             Button addTodoButton = view.findViewById(R.id.addTodoButton);
+            Button backButton = view.findViewById(R.id.backButton);
             view.findViewById(R.id.todoEmptyView).setVisibility(View.VISIBLE);
             view.findViewById(R.id.addTodoButton).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.backButton).setVisibility(View.VISIBLE);
 
             // 初始化任务列表数据
             todoList = new ArrayList<>();
@@ -383,6 +386,13 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
             // 将适配器设置给ListView
             todoListView.setAdapter(todoAdapter);
             todoAdapter.setTmType(tmType);
+
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switchMode(1);
+                }
+            });
 
             if(tmType == 1){
                 // 当长按某个item时，弹出一个对话框，询问用户是否删除该任务
