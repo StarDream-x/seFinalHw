@@ -57,6 +57,8 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
 
     ListView todoListView;
 
+    TextView todoEmptyView;
+
     private View view;
     private Context context;
 
@@ -69,11 +71,16 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.todo, container, false);
+        view = inflater.inflate(R.layout.team, container, false);
 
         todoListView = view.findViewById(R.id.todoListView);
 
         switchMode(1);
+
+        //Added By Hong Weijun 可删
+        todoEmptyView = view.findViewById(R.id.todoEmptyView);
+        todoEmptyView.setText("敬请期待");
+        todoListView.setEmptyView(todoEmptyView);
 
         //某个CheckBox被选中或取消选中时，修改任务状态
         return view;

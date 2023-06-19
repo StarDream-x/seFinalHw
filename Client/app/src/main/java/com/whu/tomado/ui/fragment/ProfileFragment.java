@@ -28,8 +28,6 @@ import com.whu.tomado.pojo.Team;
 import com.whu.tomado.ui.utils.MySingleton;
 import com.whu.tomado.utils.Global;
 
-import java.util.Locale;
-
 import com.whu.tomado.network.Task.LoginTask;
 import com.whu.tomado.network.Task.RegisterTask;
 
@@ -48,6 +46,10 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
     private Button addTeamButton;
     private Button createTeamButton;
 
+
+    private Button dataStatisticButton;
+
+
     private Button testButton;
     private Context context;
     // 用于标记用户是否已登录
@@ -63,18 +65,51 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
         aboutButton = view.findViewById(R.id.aboutButton);
         loginButton = view.findViewById(R.id.loginButton);
         logoutButton=view.findViewById(R.id.logoutButton);
-        addTeamButton=view.findViewById(R.id.addTeamButton);
-        createTeamButton=view.findViewById(R.id.createTeamButton);
+
+        addTeamButton = view.findViewById(R.id.addTeamButton);
+        createTeamButton = view.findViewById(R.id.createTeamButton);
+        dataStatisticButton=view.findViewById(R.id.dataStatiscs);
+
 //        testButton = view.findViewById(R.id.testButton);
         // 设置用户名
 //        setUsername("未登录");
         setUsername(Global.userName);
+
+//        settingsButton.setVisibility(View.GONE);
+//        addTeamButton.setVisibility(View.GONE);
+//        createTeamButton.setVisibility(View.GONE);
+//        if(Global.isLogin)
+//        {
+//            loginButton.setVisibility(View.GONE);
+//            logoutButton.setVisibility(View.VISIBLE);
+//            dataStatisticButton.setVisibility(View.VISIBLE);
+//        }else{
+//            loginButton.setVisibility(View.VISIBLE);
+//            logoutButton.setVisibility(View.GONE);
+//            dataStatisticButton.setVisibility(View.GONE);
+//        }
+
         // 设置设置按钮点击事件
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 处理设置按钮点击事件
+                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
                 openSettings();
+            }
+        });
+        addTeamButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 处理设置按钮点击事件
+                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
+            }
+        });
+        createTeamButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 处理设置按钮点击事件
+                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -120,6 +155,17 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
             }
         });
+        dataStatisticButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Global.isLogin)
+                    opendataStatistic();
+                else
+                    opendataStatistic();
+//                    Toast.makeText(getActivity(),"您还未登录",Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -129,6 +175,23 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
     private void openSettings() {
         // 处理打开设置界面的逻辑
+    }
+
+    private void opendataStatistic() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("数据统计");
+        View dialogView = getLayoutInflater().inflate(R.layout.data_statistic, null);
+        builder.setView(dialogView);
+
+        builder.setNegativeButton("确定", null);
+
+        // 创建并显示AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        alertDialog.getButton(0);
+
+//        builder.show();
     }
 
     private void openHelp() {
