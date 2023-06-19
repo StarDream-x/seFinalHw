@@ -61,7 +61,7 @@ public class TodoController {
     public ResponseEntity<TodoItem> addTodo(@RequestBody TodoItem todo){
         try {
             TodoItem result = todoService.addTodo(todo);
-            return ResponseEntity.ok(todo);
+            return ResponseEntity.ok(result);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(todo);
         }

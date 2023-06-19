@@ -311,7 +311,7 @@ public class TodoFragment extends Fragment implements AddTodoTask.OnTaskComplete
         String url = getString(R.string.server_url) + "todos";
         try {
             jsonObject.put("userId", Global.userID + "");
-            jsonObject.put("isDone", todo.isDone());
+            jsonObject.put("done", todo.isDone());
             jsonObject.put("taskName", todo.getTaskName());
             jsonObject.put("taskTime", todo.getTaskTime());
             jsonObject.put("taskNotes", todo.getTaskNotes());
@@ -357,7 +357,7 @@ public class TodoFragment extends Fragment implements AddTodoTask.OnTaskComplete
         try {
             jsonObject.put("id", todo.getId());
             jsonObject.put("userId", Global.userID + "");
-            jsonObject.put("isDone", todo.isDone());
+            jsonObject.put("done", todo.isDone());
             jsonObject.put("taskName", todo.getTaskName());
             jsonObject.put("taskTime", todo.getTaskTime());
             jsonObject.put("taskNotes", todo.getTaskNotes());

@@ -60,15 +60,13 @@ public class NodoController {
 
     @ApiOperation("添加待办事项")
     @PostMapping("")
-    public ResponseEntity<JSONObject> addNodo(@RequestBody NodoItem nodo){
+    public ResponseEntity<NodoItem> addNodo(@RequestBody NodoItem nodo){
         try {
             NodoItem result = nodoService.addNodo(nodo);
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", ""+result.getId());
-            return ResponseEntity.ok(jsonObject);
+            return ResponseEntity.ok(result);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return ResponseEntity.badRequest().body(nodo);
         }
     }
 

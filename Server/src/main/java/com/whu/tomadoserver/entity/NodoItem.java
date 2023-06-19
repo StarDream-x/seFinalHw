@@ -33,9 +33,9 @@ public class NodoItem {
     @ApiModelProperty("userId")
     long userId;
 
-    @ApiModelProperty("isDone")
+    @ApiModelProperty("failed")
     @Type(type = "boolean")
-    private boolean isDone = false;
+    private boolean failed;
 
     @ApiModelProperty("taskName")
     private String taskName;

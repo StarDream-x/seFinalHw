@@ -3,7 +3,7 @@ package com.whu.tomado.pojo;
 public class Todo {
     private long id;
 
-    private boolean isDone = false;
+    private boolean done = false;
 
     private String taskName;
     private String taskTime;
@@ -40,11 +40,11 @@ public class Todo {
     }
 
     public boolean isDone() {
-        return isDone;
+        return done;
     }
 
     public void setDone(boolean done) {
-        isDone = done;
+        this.done = done;
     }
 
     public String getTaskName() {

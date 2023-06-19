@@ -6,10 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.graphics.Paint;
@@ -65,8 +63,8 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
         Nodo currentTask = getItem(position);
         // 设置任务完成情况
         CheckBox taskFinishedBox = itemView.findViewById(R.id.taskFinished);
-        taskFinishedBox.setChecked(currentTask.isDone());
-        if(currentTask.isDone()){
+        taskFinishedBox.setChecked(currentTask.isFailed());
+        if(currentTask.isFailed()){
             taskFinishedBox.setButtonDrawable(R.drawable.ic_cross);
         }
         else{
@@ -85,7 +83,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
         taskTimeTextView.setText(currentTask.getTaskTime());
         taskNotesTextView.setText(currentTask.getTaskNotes());
         taskProgressBar.setProgress(currentTask.getTaskCycleCount());
-        if(currentTask.isDone()) {
+        if(currentTask.isFailed()) {
             taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
             taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
             taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
@@ -169,7 +167,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
                 }
                 else
                 {
-                    nodo.setDone(true);
+                    nodo.setFailed(true);
                     ((CheckBox) v).setChecked(true);
                     ((CheckBox) v).setButtonDrawable(R.drawable.ic_cross);
 
@@ -187,7 +185,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             }
             else
             {
-                nodo.setDone(true);
+                nodo.setFailed(true);
                 ((CheckBox) v).setChecked(true);
                 ((CheckBox) v).setButtonDrawable(R.drawable.ic_cross);
 
@@ -205,7 +203,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             }
         } else {
             // 如果未选中，就把任务从任务列表中移除，再添加到任务列表的unfinishedTaskCount位置
-            nodo.setDone(false);
+            nodo.setFailed(false);
             ((CheckBox) v).setChecked(false);
             ((CheckBox) v).setButtonDrawable(android.R.drawable.checkbox_off_background);
 
@@ -236,7 +234,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             jsonObject.put("taskName", nodo.getTaskName());
             jsonObject.put("taskNotes", nodo.getTaskNotes());
             jsonObject.put("taskTime", nodo.getTaskTime());
-            jsonObject.put("isDone", nodo.isDone());
+            jsonObject.put("failed", nodo.isFailed());
             jsonObject.put("taskRepeat", nodo.isTaskRepeat());
             jsonObject.put("taskCycleTot", nodo.getTaskCycleTot());
             jsonObject.put("taskCycleCount", nodo.getTaskCycleCount());
