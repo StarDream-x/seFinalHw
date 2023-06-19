@@ -21,8 +21,6 @@ import com.whu.tomado.R;
 //import com.whu.tomado.Task.RegisterTask;
 import com.whu.tomado.utils.Global;
 
-import java.util.Locale;
-
 import com.whu.tomado.network.Task.LoginTask;
 import com.whu.tomado.network.Task.RegisterTask;
 
@@ -35,6 +33,8 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
     private Button loginButton;
     private Button logoutButton;
+
+    private Button dataStatisticButton;
 
     private Button testButton;
     // 用于标记用户是否已登录
@@ -50,6 +50,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
         aboutButton = view.findViewById(R.id.aboutButton);
         loginButton = view.findViewById(R.id.loginButton);
         logoutButton=view.findViewById(R.id.logoutButton);
+        dataStatisticButton=view.findViewById(R.id.dataStatiscs);
 //        testButton = view.findViewById(R.id.testButton);
         // 设置用户名
 //        setUsername("未登录");
@@ -93,6 +94,17 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
             }
         });
+        dataStatisticButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Global.isLogin)
+                    opendataStatistic();
+                else
+                    opendataStatistic();
+//                    Toast.makeText(getActivity(),"您还未登录",Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -102,6 +114,23 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
     private void openSettings() {
         // 处理打开设置界面的逻辑
+    }
+
+    private void opendataStatistic() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("数据统计");
+        View dialogView = getLayoutInflater().inflate(R.layout.data_statistic, null);
+        builder.setView(dialogView);
+
+        builder.setNegativeButton("确定", null);
+
+        // 创建并显示AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        alertDialog.getButton(0);
+
+//        builder.show();
     }
 
     private void openHelp() {
