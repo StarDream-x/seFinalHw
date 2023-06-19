@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">tomado</string>
 
-    <string name="server_url">http://192.168.43.133:8015/</string>
+    <string name="server_url">http://http://82.156.153.137:8015/</string>
     <string name="tab_text_1">Todo</string>
     <string name="tab_text_2">Nodo</string>
     <string name="tab_text_3">番茄钟</string>
