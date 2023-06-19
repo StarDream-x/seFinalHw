@@ -5,12 +5,14 @@ import android.content.Intent;
 import com.whu.tomado.R;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 
 public class StartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.start);
         Thread myThread = new Thread() {//创建子线程
             @Override
