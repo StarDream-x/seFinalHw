@@ -78,6 +78,12 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
         return view;
     }
 
+    private boolean checkTodoExist(long ntid){
+        for(Todo todo: todoList){
+            if(todo.getId() == ntid) return true;
+        }
+        return false;
+    }
     private void getTodoListById(long userID) {
         JSONArray jsonArray = new JSONArray();
 
@@ -94,17 +100,20 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                             int sz = response.length();
                             for(int i = 0; i < sz; i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                Todo todo = new Todo();
-                                todo.setTaskName(jsonObject.getString("taskName"));
-                                todo.setTaskTime(jsonObject.getString("taskTime"));
-                                todo.setTaskNotes(jsonObject.getString("taskNotes"));
-                                todo.setTaskRepeat(jsonObject.getBoolean("taskRepeat"));
-                                todo.setTaskCycleTot(jsonObject.getInt("taskCycleTot"));
-                                todo.setTaskCycleCount(jsonObject.getInt("taskCycleCount"));
-                                todo.setDone(jsonObject.getBoolean("done"));
-                                todoList.add(todo);
-                                if (!todo.isDone()) {
-                                    todoAdapter.addUnfinishedTaskCount();
+                                if(!checkTodoExist(jsonObject.getLong("id"))){
+                                    Todo todo = new Todo();
+                                    todo.setId(jsonObject.getLong("id"));
+                                    todo.setTaskName(jsonObject.getString("taskName"));
+                                    todo.setTaskTime(jsonObject.getString("taskTime"));
+                                    todo.setTaskNotes(jsonObject.getString("taskNotes"));
+                                    todo.setTaskRepeat(jsonObject.getBoolean("taskRepeat"));
+                                    todo.setTaskCycleTot(jsonObject.getInt("taskCycleTot"));
+                                    todo.setTaskCycleCount(jsonObject.getInt("taskCycleCount"));
+                                    todo.setDone(jsonObject.getBoolean("done"));
+                                    todoList.add(todo);
+                                    if (!todo.isDone()) {
+                                        todoAdapter.addUnfinishedTaskCount();
+                                    }
                                 }
                             }
                             todoListView.setAdapter(todoAdapter);
@@ -130,6 +139,13 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
         return;
     }
 
+    private boolean checkTeamExist(long ntid){
+        for(Team team: teamList){
+            if(team.getId() == ntid) return true;
+        }
+        return false;
+    }
+
     private void getTeamListById(long userID) {
         JSONObject jsonObject = new JSONObject();
 
@@ -149,12 +165,15 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                                     ch = mTeams.charAt(i);
                                     if(ch>=48&&ch<=57) {x=(x<<3)+(x<<1)+ch-48;flag=true;}
                                     else{
-                                        Team team = new Team();
-                                        team.setId(x);x=0;flag=false;
-                                        teamList.add(team);
+                                        if(!checkTeamExist(x)){
+                                            Team team = new Team();
+                                            team.setId(x);
+                                            teamList.add(team);
+                                        }
+                                        x=0;flag=false;
                                     }
                                 }
-                                if(flag){
+                                if(flag&&(!checkTeamExist(x))){
                                     Team team = new Team();
                                     team.setId(x);
                                     teamList.add(team);
