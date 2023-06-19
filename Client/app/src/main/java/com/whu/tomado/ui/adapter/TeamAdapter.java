@@ -35,10 +35,14 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         }
         Team currentTeam = getItem(position);
         TextView teamId = itemView.findViewById(R.id.tid);
+        TextView teamDesc = itemView.findViewById(R.id.tdesc);
         Long tid = currentTeam.getId();
         teamId.setText("团队id: "+tid.toString());
+        teamDesc.setText(currentTeam.getDesc());
         teamId.setTextColor(context.getResources().getColor(R.color.black));
+        teamDesc.setTextColor(context.getResources().getColor(R.color.black));
         teamId.setPaintFlags(teamId.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+        teamDesc.setPaintFlags(teamId.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
 
         return itemView;
     }

@@ -51,7 +51,7 @@ public class ProfileService {
         Specification<ProfileItem> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
             if (uid != null) {
-                predicateList.add(criteriaBuilder.equal(root.get("ManageTeams"), uid));
+                predicateList.add(criteriaBuilder.equal(root.get("userId"), uid));
             }
             Predicate[] predicates = predicateList.toArray(new Predicate[predicateList.size()]);
             return criteriaBuilder.and(predicates);

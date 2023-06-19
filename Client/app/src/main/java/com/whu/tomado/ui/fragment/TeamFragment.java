@@ -168,6 +168,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                                         if(!checkTeamExist(x)){
                                             Team team = new Team();
                                             team.setId(x);
+                                            team.setDesc("我管理的");
                                             teamList.add(team);
                                         }
                                         x=0;flag=false;
@@ -176,6 +177,29 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                                 if(flag&&(!checkTeamExist(x))){
                                     Team team = new Team();
                                     team.setId(x);
+                                    team.setDesc("我管理的");
+                                    teamList.add(team);
+                                }
+
+                                mTeams = response.getString("memTeams");
+                                x=0;flag = false;
+                                for(int i = 0; i < mTeams.length(); ++i){
+                                    ch = mTeams.charAt(i);
+                                    if(ch>=48&&ch<=57) {x=(x<<3)+(x<<1)+ch-48;flag=true;}
+                                    else{
+                                        if(!checkTeamExist(x)){
+                                            Team team = new Team();
+                                            team.setId(x);
+                                            team.setDesc("我加入的");
+                                            teamList.add(team);
+                                        }
+                                        x=0;flag=false;
+                                    }
+                                }
+                                if(flag&&(!checkTeamExist(x))){
+                                    Team team = new Team();
+                                    team.setId(x);
+                                    team.setDesc("我加入的");
                                     teamList.add(team);
                                 }
                             }

@@ -3,11 +3,15 @@ package com.whu.tomado.pojo;
 public class Team {
     private long id;
 
-    private String idList;
+    private String mems;
+
+    private String desc;
 
     public long getId() { return id;}
-    public String getMems() { return idList;}
+    public String getMems() { return mems;}
+    public String getDesc() { return desc;}
     public void setId(long id) { this.id=id;}
-    public void setMems(String idList){this.idList=idList;}
+    public void setMems(String idList){this.mems=idList;}
+    public void setDesc(String desc) { this.desc=desc;}
 
 }
