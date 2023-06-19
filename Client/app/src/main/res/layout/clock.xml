@@ -37,6 +37,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:text="开始"
+        android:textSize="16dp"
         android:alpha="0.7"/>
 
     <View
@@ -56,6 +57,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:text="重置"
+        android:textSize="16dp"
         android:alpha="0.7" />
 
 </RelativeLayout>
