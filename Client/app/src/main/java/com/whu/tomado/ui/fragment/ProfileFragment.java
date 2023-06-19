@@ -464,7 +464,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                         });
                 // Access the RequestQueue through your singleton class.
                 MySingleton.getInstance(ProfileFragment.this.context).addToRequestQueue(jsonObjectRequest);
-//                MySingleton.getInstance(ProfileFragment.this.context).addToRequestQueue(jsonObjectRequest2);
+                MySingleton.getInstance(ProfileFragment.this.context).addToRequestQueue(jsonObjectRequest2);
 
 
             }

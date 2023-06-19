@@ -77,10 +77,10 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
 
         switchMode(1);
 
-        //Added By Hong Weijun 可删
-        todoEmptyView = view.findViewById(R.id.todoEmptyView);
-        todoEmptyView.setText("敬请期待");
-        todoListView.setEmptyView(todoEmptyView);
+//        //Added By Hong Weijun 可删
+//        todoEmptyView = view.findViewById(R.id.todoEmptyView);
+//        todoEmptyView.setText("敬请期待");
+//        todoListView.setEmptyView(todoEmptyView);
 
         //某个CheckBox被选中或取消选中时，修改任务状态
         return view;
