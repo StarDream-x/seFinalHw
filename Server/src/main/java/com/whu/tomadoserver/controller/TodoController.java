@@ -5,15 +5,11 @@ import com.whu.tomadoserver.service.TodoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.spring.web.json.Json;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author hiroxzwang
@@ -62,15 +58,12 @@ public class TodoController {
 
     @ApiOperation("添加待办事项")
     @PostMapping("")
-    public ResponseEntity<JSONObject> addTodo(@RequestBody TodoItem todo){
+    public ResponseEntity<TodoItem> addTodo(@RequestBody TodoItem todo){
         try {
             TodoItem result = todoService.addTodo(todo);
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", ""+result.getId());
-            return ResponseEntity.ok(jsonObject);
+            return ResponseEntity.ok(todo);
         }catch (Exception e){
-            e.printStackTrace();
-            return null;
+            return ResponseEntity.badRequest().body(todo);
         }
     }
 
