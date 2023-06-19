@@ -21,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.whu.tomado.R;
 import com.whu.tomado.pojo.Nodo;
 import com.whu.tomado.ui.utils.MySingleton;
+import com.whu.tomado.utils.Global;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -231,6 +232,10 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
         String url = context.getResources().getString(R.string.server_url) + "nodos/" + nodo.getId();
         try {
             jsonObject.put("id", nodo.getId());
+            jsonObject.put("userId", Global.userID + "");
+            jsonObject.put("taskName", nodo.getTaskName());
+            jsonObject.put("taskNotes", nodo.getTaskNotes());
+            jsonObject.put("taskTime", nodo.getTaskTime());
             jsonObject.put("isDone", nodo.isDone());
             jsonObject.put("taskRepeat", nodo.isTaskRepeat());
             jsonObject.put("taskCycleTot", nodo.getTaskCycleTot());

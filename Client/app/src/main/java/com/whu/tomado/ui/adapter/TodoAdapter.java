@@ -218,6 +218,10 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         String url = context.getResources().getString(R.string.server_url) + "todos/" + todo.getId();
         try {
             jsonObject.put("id", todo.getId());
+            jsonObject.put("userId", Global.userID + "");
+            jsonObject.put("taskName", todo.getTaskName());
+            jsonObject.put("taskTime", todo.getTaskTime());
+            jsonObject.put("taskNotes", todo.getTaskNotes());
             jsonObject.put("isDone", todo.isDone());
             jsonObject.put("taskRepeat", todo.isTaskRepeat());
             jsonObject.put("taskCycleTot", todo.getTaskCycleTot());
