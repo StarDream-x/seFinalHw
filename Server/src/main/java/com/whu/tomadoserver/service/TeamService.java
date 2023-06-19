@@ -24,6 +24,15 @@ public class TeamService {
     @Autowired
     TodoJPARepository todoRepository;
 
+    public TeamItem findTeamById(long id) {
+        return teamRepository.getById(id);
+    }
+
+    public void addTeamMem(TeamItem team, long uid) {
+        team.setIdList(team.getIdList()+uid+",");
+        teamRepository.save(team);
+    }
+
     public List<TodoItem> findTodos(long id) {
         List<Long> memIds = findMems(id);
         List<TodoItem> result = new ArrayList<TodoItem>();
@@ -79,5 +88,9 @@ public class TeamService {
     }
     public TeamItem addTeam(TeamItem team) {
         return teamRepository.save(team);
+    }
+
+    public TeamItem findTeamByNameAndPassword(String teamName, String teamPassword) {
+        return (teamRepository.findByTeamNameAndTeamPassword(teamName, teamPassword)).get(0);
     }
 }

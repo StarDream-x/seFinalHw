@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -101,15 +102,11 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
         addTeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 处理设置按钮点击事件
-                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
-            }
-        });
-        createTeamButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 处理设置按钮点击事件
-                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
+                // 处理创建团队按钮点击事件
+                if(Global.isLogin)
+                    openAddTeam();
+                else
+                    Toast.makeText(getActivity(),"您还未登录",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -167,6 +164,71 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
         });
 
         return view;
+    }
+
+    private void openAddTeam() {
+        //提示创建成功
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("加入团队");
+
+        // Create the layout for the dialog
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.addteam_dialog, null);
+        builder.setView(dialogView);
+
+        // Find the input fields in the dialog layout
+        EditText teamnameEditText = dialogView.findViewById(R.id.teamnameEditText);
+        EditText teamPasswordEditText = dialogView.findViewById(R.id.teamPasswordEditText);
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Retrieve the entered username
+                String teamName = teamnameEditText.getText().toString();
+                String teamPassword = teamPasswordEditText.getText().toString();
+                //如果用户名为空，则提示用户名不能为空
+                if(teamName.compareTo("") == 0){
+                    Toast.makeText(getActivity(), "团队名不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(teamPassword.compareTo("") == 0){
+                    Toast.makeText(getActivity(), "团队密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                JSONObject jsonObject = new JSONObject();
+                String url = getString(R.string.server_url) + "teams/join";
+                try {
+                    jsonObject.put("teamName", teamName);
+                    jsonObject.put("teamPassword", teamPassword);
+                    jsonObject.put("idList", Global.userID);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                        (Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onResponse(JSONObject response) {
+//                                        textView.setText("Response: " + response.toString());
+                                Log.d("addTeam", response.toString());
+                                String res = response.toString();
+                                Toast.makeText(getActivity(), "创建成功", Toast.LENGTH_SHORT).show();
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("addTeam", error.toString());
+                            }
+                        });
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                MySingleton.getInstance(ProfileFragment.this.context).addToRequestQueue(jsonObjectRequest);
+            }
+        });
+        builder.setNegativeButton("取消", null);
+        builder.create().show();
     }
 
     private void setUsername(String username) {
@@ -287,8 +349,6 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                     e.printStackTrace();
                 }
 
-
-
             }
         });
 
@@ -380,7 +440,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
     }
 
     private void openCreateTeam(){
-      //提示创建成功
+//提示创建成功
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("创建团队");
 
@@ -391,14 +451,20 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
         // Find the input fields in the dialog layout
         EditText teamnameEditText = dialogView.findViewById(R.id.teamnameEditText);
+        EditText teamPasswordEditText = dialogView.findViewById(R.id.teamPasswordEditText);
         builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Retrieve the entered username
                 String teamname = teamnameEditText.getText().toString();
+                String teamPassword = teamPasswordEditText.getText().toString();
                 //如果用户名为空，则提示用户名不能为空
                 if(teamname.compareTo("") == 0){
                     Toast.makeText(getActivity(), "团队名不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(teamPassword.compareTo("") == 0){
+                    Toast.makeText(getActivity(), "团队密码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -409,6 +475,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                 String idList = Global.userID+",";
                 try {
                     jsonObject.put("teamName", teamname);
+                    jsonObject.put("teamPassword", teamPassword);
                     jsonObject.put("idList",idList);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -423,6 +490,31 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                                 Log.d("addTeam", response.toString());
                                 try {
                                     addTeamId=response.getLong("id");
+
+                                    String url2 = getString(R.string.server_url)+"/"+Global.userID+"/"+addTeamId;
+                                    JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest
+                                            (Request.Method.PUT, url2, jsonObject2, new Response.Listener<JSONObject>() {
+
+                                                @SuppressLint("SetTextI18n")
+                                                @Override
+                                                public void onResponse(JSONObject response) {
+//                                        textView.setText("Response: " + response.toString());
+                                                    Log.d("addTeam", response.toString());
+                                                    //                                    team.setId(response.getLong("id"));
+//                                Toast.makeText(getActivity(), "创建成功", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }, new Response.ErrorListener() {
+
+                                                @SuppressLint("SetTextI18n")
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Log.e("addTeam", error.toString());
+                                                }
+                                            });
+                                    //重试不请求
+                                    jsonObjectRequest2.setRetryPolicy(new DefaultRetryPolicy(10000,0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                                    MySingleton.getInstance(ProfileFragment.this.context).addToRequestQueue(jsonObjectRequest2);
+
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -442,38 +534,13 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                String url2 = getString(R.string.server_url)+"/"+Global.userID+"/"+addTeamId;
-                JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest
-                        (Request.Method.PUT, url2, jsonObject2, new Response.Listener<JSONObject>() {
-
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void onResponse(JSONObject response) {
-//                                        textView.setText("Response: " + response.toString());
-                                Log.d("addTeam", response.toString());
-                                //                                    team.setId(response.getLong("id"));
-//                                Toast.makeText(getActivity(), "创建成功", Toast.LENGTH_SHORT).show();
-                            }
-                        }, new Response.ErrorListener() {
-
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("addTeam", error.toString());
-                            }
-                        });
-                // Access the RequestQueue through your singleton class.
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 MySingleton.getInstance(ProfileFragment.this.context).addToRequestQueue(jsonObjectRequest);
-                MySingleton.getInstance(ProfileFragment.this.context).addToRequestQueue(jsonObjectRequest2);
-
 
             }
         });
-
         builder.setNegativeButton("取消", null);
         builder.create().show();
-
-
     }
     @Override
     public void onTaskCompleted(String result) {

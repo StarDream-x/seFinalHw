@@ -35,9 +35,10 @@ public class ProfileController {
         return profileService.getManageTeam(uid);
     }
 
+    // id:userid, addTeamId:teamid
     @PutMapping("/{id}/{addTeamId}")
     public ResponseEntity<Void>updateProfile(@PathVariable long id,@PathVariable long addTeamId, @RequestBody ProfileItem profile){
-        profileService.updateProfile(addTeamId, profile);
+        profileService.updateProfileManageTeams(addTeamId, profile);
         return ResponseEntity.ok().build();
     }
 

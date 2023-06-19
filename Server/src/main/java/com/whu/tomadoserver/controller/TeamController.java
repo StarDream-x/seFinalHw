@@ -1,7 +1,9 @@
 package com.whu.tomadoserver.controller;
 
+import com.whu.tomadoserver.entity.ProfileItem;
 import com.whu.tomadoserver.entity.TeamItem;
 import com.whu.tomadoserver.entity.TodoItem;
+import com.whu.tomadoserver.service.ProfileService;
 import com.whu.tomadoserver.service.TeamService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +24,9 @@ import java.util.List;
 public class TeamController {
     @Autowired
     TeamService teamService;
+
+    @Autowired
+    ProfileService profileService;
 
     @ApiOperation("查询所有团队信息")
     @GetMapping("")
@@ -47,4 +52,20 @@ public class TeamController {
         }
     }
 
+    @ApiOperation("加入团队")
+    @PostMapping("/join")
+    public ResponseEntity<TeamItem> joinTeam(@RequestBody TeamItem team){
+        long userId = Long.parseLong(team.getIdList());
+        TeamItem result = teamService.findTeamByNameAndPassword(team.getTeamName(),team.getTeamPassword());
+        if(result==null) {
+            return ResponseEntity.noContent().build();
+        }
+        if(teamService.findMems(result.getId()).contains(userId)){
+            return ResponseEntity.badRequest().body(result);
+        }
+        teamService.addTeamMem(result, userId);
+        ProfileItem profile = profileService.getProfileById(userId);
+        profileService.updateProfileJoinTeams(result.getId(),profile);
+        return ResponseEntity.ok(result);
+    }
 }

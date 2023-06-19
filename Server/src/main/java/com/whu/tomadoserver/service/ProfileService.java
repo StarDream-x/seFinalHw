@@ -63,9 +63,19 @@ public class ProfileService {
         result.setPassword("******");
         return result;
     }
-    public void updateProfile(long id, ProfileItem profile) {
+    public void updateProfileManageTeams(long id, ProfileItem profile) {
         ProfileItem user = profileJPARepository.getById(profile.getUserId());
-        user.setManageTeams(user.getManageTeams()+","+id);
+        user.setManageTeams(user.getManageTeams()+id+",");
+        profileJPARepository.save(user);
+    }
+
+    public ProfileItem getProfileById(Long id) {
+        return profileJPARepository.getById(id);
+    }
+
+    public void updateProfileJoinTeams(long id, ProfileItem profile) {
+        ProfileItem user = profileJPARepository.getById(profile.getUserId());
+        user.setMemTeams(""+user.getMemTeams()+id+",");
         profileJPARepository.save(user);
     }
 }

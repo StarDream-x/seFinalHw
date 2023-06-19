@@ -11,11 +11,11 @@ public class Team {
 
     public long getId() { return id;}
     public int getType() {return type;}
-    public String getMems() { return mems;}
-    public String getDesc() { return desc;}
-    public void setId(long id) { this.id=id;}
-    public void setType(int type) { this.type=type;}
+    public String getMems() {return mems;}
+    public String getDesc() {return desc;}
+    public void setId(long id) {this.id=id;}
+    public void setType(int type) {this.type=type;}
     public void setMems(String idList){this.mems=idList;}
-    public void setDesc(String desc) { this.desc=desc;}
+    public void setDesc(String desc) {this.desc=desc;}
 
 }
