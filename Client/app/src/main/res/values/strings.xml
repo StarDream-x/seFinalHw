@@ -2,6 +2,8 @@
     <string name="app_name">tomado</string>
 
     <string name="server_url">http://82.156.153.137:8015/</string>
+
+>>>>>>> f025a9d12076c4cc9c4e18b4f186cca82c329e53
     <string name="tab_text_1">Todo</string>
     <string name="tab_text_2">Nodo</string>
     <string name="tab_text_3">番茄钟</string>
