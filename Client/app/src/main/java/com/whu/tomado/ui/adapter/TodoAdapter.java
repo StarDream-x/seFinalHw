@@ -32,7 +32,13 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
     private List<Todo> todoList;
     private Context context;
 
+    private int tmType = 1;
+
     private int unfinishedTaskCount = 0;
+
+    public void setTmType(int tmType) {
+        this.tmType = tmType;
+    }
 
     public int getUnfinishedTaskCount() {
         return unfinishedTaskCount;
@@ -104,6 +110,10 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
             @Override
             public void onClick(View v) {
                 boolean isChecked = ((CheckBox) v).isChecked();
+                if(tmType != 1){
+                    ((CheckBox) v).setChecked(!isChecked);
+                    return;
+                }
                 // 调用处理选中事件的函数
                 handleCheckBoxClick(currentTask, v, isChecked, position);
             }

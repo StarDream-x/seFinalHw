@@ -53,6 +53,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
 
     private int mode = 1;
     private long tmid = 0;
+    private int tmType = 0;
 
     ListView todoListView;
 
@@ -167,7 +168,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                                     else{
                                         if(!checkTeamExist(x)){
                                             Team team = new Team();
-                                            team.setId(x);
+                                            team.setId(x);team.setType(1);
                                             team.setDesc("我管理的");
                                             teamList.add(team);
                                         }
@@ -176,7 +177,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                                 }
                                 if(flag&&(!checkTeamExist(x))){
                                     Team team = new Team();
-                                    team.setId(x);
+                                    team.setId(x);team.setType(1);
                                     team.setDesc("我管理的");
                                     teamList.add(team);
                                 }
@@ -189,7 +190,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                                     else{
                                         if(!checkTeamExist(x)){
                                             Team team = new Team();
-                                            team.setId(x);
+                                            team.setId(x);team.setType(2);
                                             team.setDesc("我加入的");
                                             teamList.add(team);
                                         }
@@ -198,7 +199,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                                 }
                                 if(flag&&(!checkTeamExist(x))){
                                     Team team = new Team();
-                                    team.setId(x);
+                                    team.setId(x);team.setType(2);
                                     team.setDesc("我加入的");
                                     teamList.add(team);
                                 }
@@ -355,6 +356,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     tmid = teamList.get(position).getId();
+                    tmType = teamList.get(position).getType();
                     switchMode(2);
                 }
             });
@@ -373,126 +375,156 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
             todoAdapter = new TodoAdapter(requireContext(), todoList);
             // 将适配器设置给ListView
             todoListView.setAdapter(todoAdapter);
+            todoAdapter.setTmType(tmType);
 
-            // 当长按某个item时，弹出一个对话框，询问用户是否删除该任务
-            todoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                               int position, long id) {
+            if(tmType == 1){
+                // 当长按某个item时，弹出一个对话框，询问用户是否删除该任务
+                todoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                                   int position, long id) {
 
-                    // 创建一个delete_todo对话框
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("删除任务");
-                    builder.setMessage("确定删除该任务吗？");
+                        // 创建一个delete_todo对话框
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("删除任务");
+                        builder.setMessage("确定删除该任务吗？");
 
-                    // 添加确定按钮及点击事件
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // 处理确定按钮点击事件
-                            todoList.remove(position);
-                            todoAdapter.notifyDataSetChanged();
-                        }
-                    });
-
-                    // 添加取消按钮及点击事件
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // 处理取消按钮点击事件
-                        }
-                    });
-
-                    // 使用builder创建出对话框对象
-                    AlertDialog dialog = builder.create();
-                    // 显示对话框
-                    dialog.show();
-
-                    return true;
-                }
-            });
-
-            // 当点击单个item时，弹出一个对话框，显示任务的详细信息
-            todoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    // position 参数表示用户点击的项的位置
-
-                    // 创建一个edit_todo对话框
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    // 设置对话框标题
-                    builder.setTitle("任务详情");
-
-                    // 添加add_todo布局文件
-                    View dialogView = getLayoutInflater().inflate(R.layout.add_todo, null);
-
-                    // 设置对话框显示的View对象
-                    builder.setView(dialogView);
-
-                    TodoTaskViewUtils.setTaskView(dialogView,position,todoList,context);
-
-                    // 添加按钮及点击事件
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Todo todo_old = todoList.get(position);
-                            Todo todo = TodoTaskViewUtils.getAddOrEditTodoInfo(dialogView,context, todo_old);
-                            if( !todo_old.getTaskName().equals(todo.getTaskName()) || !todo_old.getTaskNotes().equals(todo.getTaskNotes())
-                                    || !todo_old.getTaskTime().equals(todo.getTaskTime())
-                                    || todo_old.getTaskCycleTot() != todo.getTaskCycleTot()) {
-                                setTask(position, todo);
+                        // 添加确定按钮及点击事件
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 处理确定按钮点击事件
+                                todoList.remove(position);
+                                todoAdapter.notifyDataSetChanged();
                             }
-                        }
-                    });
-                    builder.setNegativeButton("取消", null);
+                        });
 
-                    // 创建并显示AlertDialog
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                        // 添加取消按钮及点击事件
+                        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 处理取消按钮点击事件
+                            }
+                        });
 
-                    alertDialog.getButton(0);
-                }
-            });
+                        // 使用builder创建出对话框对象
+                        AlertDialog dialog = builder.create();
+                        // 显示对话框
+                        dialog.show();
+
+                        return true;
+                    }
+                });
+
+                // 当点击单个item时，弹出一个对话框，显示任务的详细信息
+                todoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // position 参数表示用户点击的项的位置
+
+                        // 创建一个edit_todo对话框
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        // 设置对话框标题
+                        builder.setTitle("任务详情");
+
+                        // 添加add_todo布局文件
+                        View dialogView = getLayoutInflater().inflate(R.layout.add_todo, null);
+
+                        // 设置对话框显示的View对象
+                        builder.setView(dialogView);
+
+                        TodoTaskViewUtils.setTaskView(dialogView,position,todoList,context);
+
+                        // 添加按钮及点击事件
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Todo todo_old = todoList.get(position);
+                                Todo todo = TodoTaskViewUtils.getAddOrEditTodoInfo(dialogView,context, todo_old);
+                                if( !todo_old.getTaskName().equals(todo.getTaskName()) || !todo_old.getTaskNotes().equals(todo.getTaskNotes())
+                                        || !todo_old.getTaskTime().equals(todo.getTaskTime())
+                                        || todo_old.getTaskCycleTot() != todo.getTaskCycleTot()) {
+                                    setTask(position, todo);
+                                }
+                            }
+                        });
+                        builder.setNegativeButton("取消", null);
+
+                        // 创建并显示AlertDialog
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+                        alertDialog.getButton(0);
+                    }
+                });
 
 
-            // 设置"添加任务"按钮的点击事件
-            // 在您希望弹出页面的位置，例如点击一个按钮时
-            addTodoButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("添加TODO");
+                // 设置"添加任务"按钮的点击事件
+                // 在您希望弹出页面的位置，例如点击一个按钮时
+                addTodoButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("添加TODO");
 //                builder.setMessage("这是一个弹出页面的示例");
 
-                    // 添加自定义布局
-                    View dialogView = getLayoutInflater().inflate(R.layout.add_todo, null);
-                    builder.setView(dialogView);
+                        // 添加自定义布局
+                        View dialogView = getLayoutInflater().inflate(R.layout.add_todo, null);
+                        builder.setView(dialogView);
 
-                    TodoTaskViewUtils.addTaskVIew(dialogView,context);
+                        TodoTaskViewUtils.addTaskVIew(dialogView,context);
 
-                    // 添加按钮及点击事件
+                        // 添加按钮及点击事件
 
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Todo todo = TodoTaskViewUtils.getAddOrEditTodoInfo(dialogView,context, new Todo());
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Todo todo = TodoTaskViewUtils.getAddOrEditTodoInfo(dialogView,context, new Todo());
 
-                            if(todo != null) {
-                                addNewTask(todo);
+                                if(todo != null) {
+                                    addNewTask(todo);
+                                }
+
                             }
+                        });
+                        builder.setNegativeButton("取消", null);
 
-                        }
-                    });
-                    builder.setNegativeButton("取消", null);
+                        // 创建并显示AlertDialog
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
 
-                    // 创建并显示AlertDialog
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                        alertDialog.getButton(0);
+                    }
+                });
+            }
+            else{
+                // 当长按某个item时，弹出一个对话框，询问用户是否删除该任务
+                todoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                                   int position, long id) {
+                        return true;
+                    }
+                });
 
-                    alertDialog.getButton(0);
-                }
-            });
+                // 当点击单个item时，弹出一个对话框，显示任务的详细信息
+                todoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    }
+                });
+
+
+                // 设置"添加任务"按钮的点击事件
+                // 在您希望弹出页面的位置，例如点击一个按钮时
+                addTodoButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                });
+            }
         }
     }
 
