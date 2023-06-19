@@ -33,6 +33,8 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
     private Button loginButton;
     private Button logoutButton;
+    private Button addTeamButton;
+    private Button createTeamButton;
 
     private Button dataStatisticButton;
 
@@ -50,17 +52,49 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
         aboutButton = view.findViewById(R.id.aboutButton);
         loginButton = view.findViewById(R.id.loginButton);
         logoutButton=view.findViewById(R.id.logoutButton);
+        addTeamButton = view.findViewById(R.id.addTeamButton);
+        createTeamButton = view.findViewById(R.id.createTeamButton);
         dataStatisticButton=view.findViewById(R.id.dataStatiscs);
 //        testButton = view.findViewById(R.id.testButton);
         // 设置用户名
 //        setUsername("未登录");
         setUsername(Global.userName);
+
+//        settingsButton.setVisibility(View.GONE);
+//        addTeamButton.setVisibility(View.GONE);
+//        createTeamButton.setVisibility(View.GONE);
+//        if(Global.isLogin)
+//        {
+//            loginButton.setVisibility(View.GONE);
+//            logoutButton.setVisibility(View.VISIBLE);
+//            dataStatisticButton.setVisibility(View.VISIBLE);
+//        }else{
+//            loginButton.setVisibility(View.VISIBLE);
+//            logoutButton.setVisibility(View.GONE);
+//            dataStatisticButton.setVisibility(View.GONE);
+//        }
+
         // 设置设置按钮点击事件
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 处理设置按钮点击事件
+                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
                 openSettings();
+            }
+        });
+        addTeamButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 处理设置按钮点击事件
+                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
+            }
+        });
+        createTeamButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 处理设置按钮点击事件
+                Toast.makeText(getActivity(), "敬请期待", Toast.LENGTH_SHORT).show();
             }
         });
 

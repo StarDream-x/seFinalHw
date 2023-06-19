@@ -7,6 +7,19 @@
     tools:context=".ui.activity.MainActivity">
 
 
+    <!-- 预览版 -->
+    <TextView
+        android:id="@+id/showTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:paddingBottom="4dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="预览版，数据为预先设定，正式版敬请期待" />
+
+
     <!-- TODO统计（非重复任务） -->
     <TextView
         android:id="@+id/unRepeatTextView"
