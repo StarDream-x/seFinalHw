@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.graphics.Paint;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -167,6 +168,35 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
                 }
                 else
                 {
+                    if(unfinishedTaskCount-1 <= nodoList.size() )
+                    {
+                        nodo.setFailed(true);
+                        ((CheckBox) v).setChecked(true);
+                        ((CheckBox) v).setButtonDrawable(R.drawable.ic_cross);
+
+                        taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                        taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                        taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                        taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        nodoList.remove(nodo);
+
+                        nodoList.add(unfinishedTaskCount-1,nodo);
+                        unfinishedTaskCount--;
+                    }
+                    else {
+                        Toast.makeText(getContext(), "服务器错误，请重试", Toast.LENGTH_SHORT).show();
+                        ((CheckBox) v).setChecked(false);
+                        ((CheckBox) v).setButtonDrawable(android.R.drawable.checkbox_off_background);
+                    }
+                }
+            }
+            else
+            {
+                if(unfinishedTaskCount-1 <= nodoList.size() )
+                {
                     nodo.setFailed(true);
                     ((CheckBox) v).setChecked(true);
                     ((CheckBox) v).setButtonDrawable(R.drawable.ic_cross);
@@ -179,27 +209,15 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
                     taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
                     nodoList.remove(nodo);
+
                     nodoList.add(unfinishedTaskCount-1,nodo);
                     unfinishedTaskCount--;
                 }
-            }
-            else
-            {
-                nodo.setFailed(true);
-                ((CheckBox) v).setChecked(true);
-                ((CheckBox) v).setButtonDrawable(R.drawable.ic_cross);
-
-                taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
-                taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
-                taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
-                taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-                nodoList.remove(nodo);
-                nodo.setTaskCycleCount(nodo.getTaskCycleTot());
-                nodoList.add(unfinishedTaskCount-1,nodo);
-                unfinishedTaskCount--;
+                else {
+                    Toast.makeText(getContext(), "服务器错误，请重试", Toast.LENGTH_SHORT).show();
+                    ((CheckBox) v).setChecked(false);
+                    ((CheckBox) v).setButtonDrawable(android.R.drawable.checkbox_off_background);
+                }
             }
         } else {
             // 如果未选中，就把任务从任务列表中移除，再添加到任务列表的unfinishedTaskCount位置
