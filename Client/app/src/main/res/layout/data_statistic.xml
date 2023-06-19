@@ -7,19 +7,6 @@
     tools:context=".ui.activity.MainActivity">
 
 
-    <!-- 预览版 -->
-    <TextView
-        android:id="@+id/showTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="16dp"
-        android:paddingBottom="4dp"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:text="预览版，数据为预先设定，正式版敬请期待" />
-
-
     <!-- TODO统计（非重复任务） -->
     <TextView
         android:id="@+id/unRepeatTextView"
@@ -254,6 +241,18 @@
         android:paddingBottom="8dp"
         android:progress="70"
         android:max="100" />
+
+    <!-- 预览版 -->
+    <TextView
+        android:id="@+id/showTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:paddingBottom="4dp"
+        android:textSize="12sp"
+        android:textColor="@color/half_black_2"
+        android:text="本界面为预览版，数据不可变更\n数据统计功能将在下一版本正式发布，敬请期待"/>
 
 <!--    <View-->
 <!--        android:layout_width="match_parent"-->
