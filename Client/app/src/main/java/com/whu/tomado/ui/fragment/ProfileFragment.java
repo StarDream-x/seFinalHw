@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
     // 用于标记用户是否已登录
 //    private boolean isLoggedIn = false;
 
-
+    public long addTeamId;
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -405,7 +405,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                 JSONObject jsonObject = new JSONObject();
                 JSONObject jsonObject2 = new JSONObject();
                 String url = getString(R.string.server_url) + "teams";
-                String url2 = getString(R.string.server_url)+"/"+Global.userID;
+
                 String idList = Global.userID+",";
                 try {
                     jsonObject.put("teamName", teamname);
@@ -415,6 +415,36 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                 }
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                         (Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onResponse(JSONObject response) {
+//                                        textView.setText("Response: " + response.toString());
+                                Log.d("addTeam", response.toString());
+                                try {
+                                    addTeamId=response.getLong("id");
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+//                                Toast.makeText(getActivity(), "创建成功", Toast.LENGTH_SHORT).show();
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("addTeam", error.toString());
+                            }
+                        });
+                try {
+                    jsonObject2.put("userId", Global.userID);
+                    jsonObject2.put("tid",addTeamId);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String url2 = getString(R.string.server_url)+"/"+Global.userID+"/"+addTeamId;
+                JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest
+                        (Request.Method.PUT, url2, jsonObject2, new Response.Listener<JSONObject>() {
 
                             @SuppressLint("SetTextI18n")
                             @Override
@@ -432,36 +462,6 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                                 Log.e("addTeam", error.toString());
                             }
                         });
-//                try {
-//                    jsonObject2.put("userId", Global.userID);
-//                    jsonObject2.put("username","");
-//                    jsonObject2.put("password","");
-//                    jsonObject2.put("MangeTeams","");
-//                    jsonObject2.put("MemTeams","");
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest
-//                        (Request.Method.PUT, url2, jsonObject2, new Response.Listener<JSONObject>() {
-//
-//                            @SuppressLint("SetTextI18n")
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-////                                        textView.setText("Response: " + response.toString());
-//                                Log.d("addTeam", response.toString());
-//                                //                                    team.setId(response.getLong("id"));
-////                                Toast.makeText(getActivity(), "创建成功", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }, new Response.ErrorListener() {
-//
-//                            @SuppressLint("SetTextI18n")
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                Log.e("addTeam", error.toString());
-//                            }
-//                        });
                 // Access the RequestQueue through your singleton class.
                 MySingleton.getInstance(ProfileFragment.this.context).addToRequestQueue(jsonObjectRequest);
 //                MySingleton.getInstance(ProfileFragment.this.context).addToRequestQueue(jsonObjectRequest2);
