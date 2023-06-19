@@ -11,24 +11,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.whu.tomado.R;
-import com.whu.tomado.network.Task.AddTodoTask;
-import com.whu.tomado.network.Task.LoginTask;
-import com.whu.tomado.network.VolleyCallback;
 import com.whu.tomado.pojo.Nodo;
 import com.whu.tomado.ui.adapter.NodoAdapter;
 import com.whu.tomado.ui.utils.MySingleton;
@@ -41,7 +34,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class NodoFragment extends Fragment {
 
@@ -242,9 +234,9 @@ public class NodoFragment extends Fragment {
                                 nodo.setTaskRepeat(jsonObject.getBoolean("taskRepeat"));
                                 nodo.setTaskCycleTot(jsonObject.getInt("taskCycleTot"));
                                 nodo.setTaskCycleCount(jsonObject.getInt("taskCycleCount"));
-                                nodo.setDone(jsonObject.getBoolean("done"));
+                                nodo.setFailed(jsonObject.getBoolean("failed"));
                                 nodoList.add(nodo);
-                                if (!nodo.isDone()) {
+                                if (!nodo.isFailed()) {
                                     nodoAdapter.addUnfinishedTaskCount();
                                 }
                             }
@@ -300,7 +292,7 @@ public class NodoFragment extends Fragment {
         String url = getString(R.string.server_url) + "nodos";
         try {
             jsonObject.put("userId", Global.userID + "");
-            jsonObject.put("isDone", nodo.isDone());
+            jsonObject.put("failed", nodo.isFailed());
             jsonObject.put("taskName", nodo.getTaskName());
             jsonObject.put("taskTime", nodo.getTaskTime());
             jsonObject.put("taskNotes", nodo.getTaskNotes());
@@ -346,7 +338,7 @@ public class NodoFragment extends Fragment {
         try {
             jsonObject.put("id", nodo.getId());
             jsonObject.put("userId", Global.userID + "");
-            jsonObject.put("isDone", nodo.isDone());
+            jsonObject.put("failed", nodo.isFailed());
             jsonObject.put("taskName", nodo.getTaskName());
             jsonObject.put("taskTime",nodo.getTaskTime());
             jsonObject.put("taskNotes", nodo.getTaskNotes());

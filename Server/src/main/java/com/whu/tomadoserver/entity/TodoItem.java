@@ -33,9 +33,9 @@ public class TodoItem {
     @ApiModelProperty("userId")
     long userId;
 
-    @ApiModelProperty("isDone")
+    @ApiModelProperty("done")
     @Type(type = "boolean")
-    private boolean isDone = false;
+    private boolean done;
 
     @ApiModelProperty("taskName")
     private String taskName;

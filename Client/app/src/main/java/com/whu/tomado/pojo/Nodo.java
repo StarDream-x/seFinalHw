@@ -4,7 +4,7 @@ public class Nodo {
 
     private long id;
 
-    private boolean isDone = false;
+    private boolean failed = false;
 
     private String taskName;
     private String taskTime;
@@ -40,12 +40,12 @@ public long getId() {
     public Nodo() {
     }
     
-    public boolean isDone() {
-        return isDone;
+    public boolean isFailed() {
+        return failed;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setFailed(boolean failed) {
+        this.failed = failed;
     }
 
     public String getTaskName() {

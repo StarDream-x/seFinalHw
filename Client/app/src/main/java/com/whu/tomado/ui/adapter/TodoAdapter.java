@@ -222,7 +222,7 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
             jsonObject.put("taskName", todo.getTaskName());
             jsonObject.put("taskTime", todo.getTaskTime());
             jsonObject.put("taskNotes", todo.getTaskNotes());
-            jsonObject.put("isDone", todo.isDone());
+            jsonObject.put("done", todo.isDone());
             jsonObject.put("taskRepeat", todo.isTaskRepeat());
             jsonObject.put("taskCycleTot", todo.getTaskCycleTot());
             jsonObject.put("taskCycleCount", todo.getTaskCycleCount());
