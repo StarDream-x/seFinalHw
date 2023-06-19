@@ -1,5 +1,6 @@
 package com.whu.tomadoserver.controller;
 
+import com.whu.tomadoserver.entity.ProfileItem;
 import com.whu.tomadoserver.service.ProfileService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,11 @@ public class ProfileController {
     @GetMapping("/register")
     public String register(@Param("username") String username, @Param("password") String password) {
         return profileService.register(username, password);
+    }
+
+    @GetMapping("/manageTeam")
+    public ProfileItem getManageTeam(@Param("uid") Long uid) {
+        if(uid==null) {return null;}
+        return profileService.getManageTeam(uid);
     }
 }

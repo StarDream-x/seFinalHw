@@ -5,7 +5,7 @@ import com.android.volley.toolbox.Volley;
 
 public class Global {
     public static long userID;
-
     public static String userName="未登录";
     public static boolean isLogin=false;
+    public static long userUpLimit=1000000;
 }

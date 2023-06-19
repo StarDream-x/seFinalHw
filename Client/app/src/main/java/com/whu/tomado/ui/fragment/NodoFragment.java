@@ -198,7 +198,7 @@ public class NodoFragment extends Fragment {
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Nodo nodo = NodoTaskViewUtils.getAddOrEditNodoInfo(dialogView,context,new Nodo());
+                        Nodo nodo = NodoTaskViewUtils.getAddOrEditNodoInfo(dialogView,context,null);
                         if(nodo != null) {
                             addNewTask(nodo);
                         }

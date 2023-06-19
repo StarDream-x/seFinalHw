@@ -210,7 +210,7 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             nodoList.add(0, nodo);
             unfinishedTaskCount++;
             int cnt=nodo.getTaskCycleCount();
-            if(nodo.isTaskRepeat())
+            if(nodo.isTaskRepeat() && cnt == 0)
             {
                 cnt=nodo.getTaskCycleTot();
                 nodo.setTaskCycleCount(cnt);

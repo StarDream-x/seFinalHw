@@ -104,7 +104,12 @@ public class NodoTaskViewUtils {
     }
 
     // 获取对应Nodo的详细信息
-    public static Nodo getAddOrEditNodoInfo(View dialogView, Context context,Nodo old_nodo){
+    public static Nodo getAddOrEditNodoInfo(View dialogView, Context context,@Nullable Nodo old_nodo){
+        boolean new_nodo = false;
+        if(old_nodo==null){
+            new_nodo=true;
+            old_nodo = new Nodo();
+        }
         // 处理确定按钮点击事件
         taskNameEditText = dialogView.findViewById(R.id.taskNameEditText);
         taskNotesEditText = dialogView.findViewById(R.id.taskNotesEditText);
@@ -130,6 +135,9 @@ public class NodoTaskViewUtils {
 
         // taskCycleTot/taskCycleTime 转为整数或报错
         int taskCycleTot = toInt(taskCycleTot_string, taskRepeat, "重复次数应为整数",context);
+        if(taskRepeat&&new_nodo){
+            old_nodo.setTaskCycleCount(taskCycleTot);
+        }
         if (taskCycleTot == -1) return null;
 //        int taskCycleTime = toInt(taskCycleTime_string, taskRepeat, "每个周期天数应为正整数",context);
 //        if (taskCycleTime == -1) return null;

@@ -25,7 +25,7 @@ import javax.persistence.Id;
 public class TodoItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @ApiModelProperty("id")
     long id;
 
