@@ -1,6 +1,8 @@
 package com.whu.tomado.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +14,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.graphics.Paint;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.whu.tomado.R;
 import com.whu.tomado.pojo.Nodo;
+import com.whu.tomado.ui.utils.MySingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -217,5 +227,38 @@ public class NodoAdapter extends ArrayAdapter<Nodo> {
             }
         }
         notifyDataSetChanged();
+        JSONObject jsonObject = new JSONObject();
+        String url = context.getResources().getString(R.string.server_url) + "nodos/" + nodo.getId();
+        try {
+            jsonObject.put("id", nodo.getId());
+            jsonObject.put("isDone", nodo.isDone());
+            jsonObject.put("taskRepeat", nodo.isTaskRepeat());
+            jsonObject.put("taskCycleTot", nodo.getTaskCycleTot());
+            jsonObject.put("taskCycleCount", nodo.getTaskCycleCount());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                                        textView.setText("Response: " + response.toString());
+                        Log.d("editNodo", response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+//                                        textView.setText("Error:"+error.toString());
+                        Log.e("editNodo", error.toString());
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(NodoAdapter.this.context).addToRequestQueue(jsonObjectRequest);
     }
 }

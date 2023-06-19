@@ -1,7 +1,9 @@
 package com.whu.tomado.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,18 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.whu.tomado.R;
 import com.whu.tomado.pojo.Todo;
+import com.whu.tomado.ui.fragment.TodoFragment;
+import com.whu.tomado.ui.utils.MySingleton;
+import com.whu.tomado.utils.Global;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -200,5 +212,41 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
             }
         }
         notifyDataSetChanged();
+        JSONObject jsonObject = new JSONObject();
+
+        //转为string
+        String url = context.getResources().getString(R.string.server_url) + "todos/" + todo.getId();
+        try {
+            jsonObject.put("id", todo.getId());
+            jsonObject.put("isDone", todo.isDone());
+            jsonObject.put("taskRepeat", todo.isTaskRepeat());
+            jsonObject.put("taskCycleTot", todo.getTaskCycleTot());
+            jsonObject.put("taskCycleCount", todo.getTaskCycleCount());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                                        textView.setText("Response: " + response.toString());
+                        Log.d("editTodo", response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+//                                        textView.setText("Error:"+error.toString());
+                        Log.e("editTodo", error.toString());
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(TodoAdapter.this.context).addToRequestQueue(jsonObjectRequest);
+
     }
 }
