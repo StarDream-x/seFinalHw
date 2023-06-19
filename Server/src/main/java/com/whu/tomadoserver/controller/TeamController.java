@@ -8,10 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +35,16 @@ public class TeamController {
     public ResponseEntity<List<TodoItem>> findTeamTodos(@ApiParam("团队Id")@PathVariable long id){
         List<TodoItem> result = teamService.findTodos(id);
         return ResponseEntity.ok(result);
+    }
+    @ApiOperation("添加团队")
+    @PostMapping("")
+    public ResponseEntity<TeamItem> addTeam(@RequestBody TeamItem team){
+        try {
+            TeamItem result = teamService.addTeam(team);
+            return ResponseEntity.ok(result);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(team);
+        }
     }
 
 }

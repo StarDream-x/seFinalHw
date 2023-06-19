@@ -22,7 +22,7 @@ public class Test {
     @ApiOperation("查询团队Todo")
     @GetMapping("/test")
     public ResponseEntity<TeamItem> findTeamTodos(){
-        TeamItem teamItem = new TeamItem(1, "team1");
+        TeamItem teamItem = new TeamItem(1, "team1","1,2");
         return ResponseEntity.ok(teamItem);
     }
 }

@@ -63,4 +63,7 @@ public class ProfileService {
         result.setPassword("******");
         return result;
     }
+    public void updateProfile(long id, ProfileItem profile) {
+        profileJPARepository.save(profile);
+    }
 }

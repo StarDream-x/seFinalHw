@@ -77,4 +77,7 @@ public class TeamService {
     public List<TeamItem> findTeams(){
         return teamRepository.findAll();
     }
+    public TeamItem addTeam(TeamItem team) {
+        return teamRepository.save(team);
+    }
 }

@@ -28,6 +28,9 @@ public class TeamItem {
     @ApiModelProperty("id")
     long id;
 
+    @ApiModelProperty("团队名")
+    String teamName;
+
     @Value("0")
     @ApiModelProperty("idList")
     String idList;

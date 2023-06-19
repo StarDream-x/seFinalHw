@@ -5,8 +5,8 @@ import com.whu.tomadoserver.service.ProfileService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 孔德昱
@@ -30,8 +30,15 @@ public class ProfileController {
     }
 
     @GetMapping("/manageTeam")
-    public ProfileItem getManageTeam(@Param("uid") Long uid) {
+    public ProfileItem getManageTeam(@Param("userId") Long uid) {
         if(uid==null) {return null;}
         return profileService.getManageTeam(uid);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void>updateProfile(@PathVariable long id, @RequestBody ProfileItem profile){
+        profileService.updateProfile(id, profile);
+        return ResponseEntity.ok().build();
+    }
+
 }
