@@ -64,6 +64,8 @@ public class ProfileService {
         return result;
     }
     public void updateProfile(long id, ProfileItem profile) {
-        profileJPARepository.save(profile);
+        ProfileItem user = profileJPARepository.getById(profile.getUserId());
+        user.setManageTeams(user.getManageTeams()+","+id);
+        profileJPARepository.save(user);
     }
 }
