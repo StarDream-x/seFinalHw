@@ -34,10 +34,11 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
     private Button aboutButton;
 
     private Button loginButton;
+    private Button logoutButton;
 
     private Button testButton;
     // 用于标记用户是否已登录
-    private boolean isLoggedIn = false;
+//    private boolean isLoggedIn = false;
 
 
     @SuppressLint("MissingInflatedId")
@@ -48,10 +49,11 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
         settingsButton = view.findViewById(R.id.settingsButton);
         aboutButton = view.findViewById(R.id.aboutButton);
         loginButton = view.findViewById(R.id.loginButton);
+        logoutButton=view.findViewById(R.id.logoutButton);
 //        testButton = view.findViewById(R.id.testButton);
         // 设置用户名
-        setUsername("未登录");
-
+//        setUsername("未登录");
+        setUsername(Global.userName);
         // 设置设置按钮点击事件
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +76,23 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
             @Override
             public void onClick(View v) {
                 // 处理登录按钮点击事件
-                openLogin();
+                if(!Global.isLogin)
+                    openLogin();
+                else
+                    Toast.makeText(getActivity(),"您已登录",Toast.LENGTH_SHORT).show();
             }
         });
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 处理登出按钮点击事件
+                if(Global.isLogin)
+                    openLogout();
+                else
+                    Toast.makeText(getActivity(),"您还未登录",Toast.LENGTH_SHORT).show();
 
+            }
+        });
         return view;
     }
 
@@ -102,7 +117,26 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
         builder.show();
     }
 
-
+    private void openLogout(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("登出");
+        builder.setMessage("确定要登出吗？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // 处理登出按钮点击事件
+//                isLoggedIn = false;
+                Global.isLogin=false;
+                setUsername("未登录");
+                Global.userName="未登录";
+                Global.userID=0;
+                Toast.makeText(getActivity(), "登出成功", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("取消", null);
+        builder.show();
+    }
     private void openLogin() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("登录");
@@ -144,15 +178,18 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                     //如果result中包含true，则登录成功，否则登录失败
                     if(result.toLowerCase().contains("true")){
                         Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
-                        setUsername(username);
-                        isLoggedIn = true;
+                        Global.userName=username;
+                        setUsername(Global.userName);
+//                        isLoggedIn = true;
+                        Global.isLogin=true;
                         System.out.println(result);
                         long userId=Long.parseLong(result.split(" ")[0]);
                         Global.userID= userId;
 //                        Toast.makeText(getActivity(), "用户ID为"+userId, Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
-                        isLoggedIn = false;
+//                        isLoggedIn = false;
+                        Global.isLogin=false;
                     }
 
 //                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
