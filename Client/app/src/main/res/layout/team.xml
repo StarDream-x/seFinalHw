@@ -5,24 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/test_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="14dp"
-        android:text="测试"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".ui.activity.MainActivity">
 
-    <TextView
-        android:id="@+id/showJsonTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
-        android:text="hello world"
-        android:textColor="#FF0000"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- 任务列表 -->
+        <ListView
+            android:id="@+id/todoListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!--    todoEmptyView，要求在页面上方的中心-->
+        <TextView
+            android:id="@+id/todoEmptyView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="当前暂无任务，请点击下方按钮添加"
+            android:textAlignment="center"
+            android:textColor="@color/background"
+            android:textSize="18sp" />
+
+
+        <!-- 添加新任务按钮，要求在页面的底部 -->
+        <Button
+            android:id="@+id/addTodoButton"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/rounded_button"
+            android:drawableTop="@drawable/add"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:paddingTop="16dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
