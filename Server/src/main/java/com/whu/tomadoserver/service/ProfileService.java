@@ -65,7 +65,10 @@ public class ProfileService {
     }
     public void updateProfileManageTeams(long id, ProfileItem profile) {
         ProfileItem user = profileJPARepository.getById(profile.getUserId());
-        user.setManageTeams(user.getManageTeams()+id+",");
+        if(user.getManageTeams()==null){
+            user.setManageTeams(id+",");
+        }
+        else user.setManageTeams(""+user.getManageTeams()+id+",");
         profileJPARepository.save(user);
     }
 
@@ -75,7 +78,11 @@ public class ProfileService {
 
     public void updateProfileJoinTeams(long id, ProfileItem profile) {
         ProfileItem user = profileJPARepository.getById(profile.getUserId());
-        user.setMemTeams(""+user.getMemTeams()+id+",");
+        if(user.getMemTeams()==null){
+            user.setMemTeams(id+",");
+        }
+        else user.setMemTeams(""+user.getMemTeams()+id+",");
+//        user.setMemTeams(""+user.getMemTeams()+id+",");
         profileJPARepository.save(user);
     }
 }

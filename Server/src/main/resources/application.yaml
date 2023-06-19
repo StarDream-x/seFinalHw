@@ -16,7 +16,9 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/tomado?useSSL=false&autoReconnect=true&characterEncoding=utf8&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: kdy1518579103
+#    username: root
+#    password: kdy1518579103
+    username: admin
+    password: root
     hikari:
       max-lifetime: 120000

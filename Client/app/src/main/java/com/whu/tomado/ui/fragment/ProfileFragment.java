@@ -213,7 +213,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 //                                        textView.setText("Response: " + response.toString());
                                 Log.d("addTeam", response.toString());
                                 String res = response.toString();
-                                Toast.makeText(getActivity(), "创建成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "加入成功", Toast.LENGTH_SHORT).show();
                             }
                         }, new Response.ErrorListener() {
 
@@ -501,7 +501,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 //                                        textView.setText("Response: " + response.toString());
                                                     Log.d("addTeam", response.toString());
                                                     //                                    team.setId(response.getLong("id"));
-//                                Toast.makeText(getActivity(), "创建成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "创建成功", Toast.LENGTH_SHORT).show();
                                                 }
                                             }, new Response.ErrorListener() {
 
