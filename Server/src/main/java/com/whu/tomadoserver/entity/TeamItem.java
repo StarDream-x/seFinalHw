@@ -31,6 +31,9 @@ public class TeamItem {
     @ApiModelProperty("团队名")
     String teamName;
 
+    @ApiModelProperty("加入密码")
+    String teamPassword;
+
     @Value("0")
     @ApiModelProperty("idList")
     String idList;

@@ -6,10 +6,10 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/teamnameEditText"
+        android:id="@+id/teamIdEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="团队名" />
+        android:hint="团队id" />
 
     <EditText
         android:id="@+id/teamPasswordEditText"
