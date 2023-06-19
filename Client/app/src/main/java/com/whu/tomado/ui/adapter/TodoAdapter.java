@@ -34,12 +34,14 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
     private Context context;
 
     private int tmType = 1;
+    private long tmid = -1;
 
     private int unfinishedTaskCount = 0;
 
     public void setTmType(int tmType) {
         this.tmType = tmType;
     }
+    public void setTmid(long tmid) {this.tmid = tmid;}
 
     public int getUnfinishedTaskCount() {
         return unfinishedTaskCount;
@@ -245,7 +247,9 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         String url = context.getResources().getString(R.string.server_url) + "todos/" + todo.getId();
         try {
             jsonObject.put("id", todo.getId());
-            jsonObject.put("userId", Global.userID + "");
+            if(tmid >= 0){
+                jsonObject.put("userId", Global.userUpLimit + tmid);
+            }else{jsonObject.put("userId", Global.userID + "");}
             jsonObject.put("taskName", todo.getTaskName());
             jsonObject.put("taskTime", todo.getTaskTime());
             jsonObject.put("taskNotes", todo.getTaskNotes());
