@@ -146,7 +146,7 @@ public class ClockFragment extends Fragment {
             @Override
             public void onFinish() {
                 isTimerRunning = false;
-                startButton.setText("Start");
+                startButton.setText("开始");
                 // 播放铃声或执行其他操作以指示番茄钟完成
                 playVibrate(context);
 //                playRing(context);
@@ -155,13 +155,13 @@ public class ClockFragment extends Fragment {
 
         // 计时器正在运行
         isTimerRunning = true;
-        startButton.setText("Pause");
+        startButton.setText("暂停");
     }
 
     private void pauseTimer() {
         countDownTimer.cancel();
         isTimerRunning = false;
-        startButton.setText("Start");
+        startButton.setText("开始");
     }
 
     // 重置计时器
@@ -169,7 +169,7 @@ public class ClockFragment extends Fragment {
         timeLeftInMillis = START_TIME_IN_MILLIS;
         updateTimerText();
         isTimerRunning = false;
-        startButton.setText("Start");
+        startButton.setText("开始");
     }
 
     // 将剩余时间转换为格式化的字符串，并将其设置为TextView的文本
