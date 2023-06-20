@@ -1,6 +1,6 @@
-# 提前说明
+# 安装说明
 
-- 请大家在git 提交的时候首先创建自己的分支，不然容易很混乱
+- [点击此处安装](https://gitee.com/kdykdykdy/tomado/raw/master/Tomado.apk)
 
 # 项目说明
 

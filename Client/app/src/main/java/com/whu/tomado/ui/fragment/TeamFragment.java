@@ -352,7 +352,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
             view.findViewById(R.id.todoEmptyView).setVisibility(View.GONE);
             view.findViewById(R.id.addTodoButton).setVisibility(View.GONE);
             view.findViewById(R.id.backButton).setVisibility(View.GONE);
-            
+
             //Added By Hong Weijun 可删 upd: 现在别删了
             teamEmptyView = view.findViewById(R.id.teamEmptyView);
             //todoEmptyView.setText("敬请期待");
