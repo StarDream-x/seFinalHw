@@ -16,7 +16,7 @@
         <ListView
             android:id="@+id/todoListView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <!--    todoEmptyView，要求在页面上方的中心-->
@@ -25,11 +25,21 @@
             android:layout_width="match_parent"
             android:layout_height="290dp"
             android:layout_weight="1"
-            android:text="当前暂无团队，请在“我的”页面添加"
+            android:text="当前暂无任务，请点击下方按钮添加"
             android:textAlignment="center"
             android:textColor="@color/background"
             android:textSize="18sp" />
 
+        <!--    teamEmptyView，要求在页面上方的中心-->
+        <TextView
+            android:id="@+id/teamEmptyView"
+            android:layout_width="match_parent"
+            android:layout_height="290dp"
+            android:layout_weight="1"
+            android:text=" 当前暂无团队，请在“我的”页面添加"
+            android:textAlignment="center"
+            android:textColor="@color/background"
+            android:textSize="18sp" />
 
         <!-- 添加新任务按钮，要求在页面的底部 -->
         <LinearLayout

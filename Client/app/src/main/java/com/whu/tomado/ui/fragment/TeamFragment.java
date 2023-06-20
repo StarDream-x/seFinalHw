@@ -57,7 +57,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
 
     ListView todoListView;
 
-    TextView todoEmptyView;
+    TextView teamEmptyView;
 
     private View view;
     private Context context;
@@ -78,9 +78,9 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
         switchMode(1);
 
         //Added By Hong Weijun 可删 upd: 现在别删了
-        todoEmptyView = view.findViewById(R.id.todoEmptyView);
-        //todoEmptyView.setText("敬请期待");
-        todoListView.setEmptyView(todoEmptyView);
+//        todoEmptyView = view.findViewById(R.id.todoEmptyView);
+//        //todoEmptyView.setText("敬请期待");
+//        todoListView.setEmptyView(todoEmptyView);
 
         //某个CheckBox被选中或取消选中时，修改任务状态
         return view;
@@ -349,15 +349,21 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
     private void switchMode(int mode){
         this.mode=mode;
         if(mode == 1){
-            view.findViewById(R.id.todoEmptyView).setVisibility(View.INVISIBLE);
-            view.findViewById(R.id.addTodoButton).setVisibility(View.INVISIBLE);
-            view.findViewById(R.id.backButton).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.todoEmptyView).setVisibility(View.GONE);
+            view.findViewById(R.id.addTodoButton).setVisibility(View.GONE);
+            view.findViewById(R.id.backButton).setVisibility(View.GONE);
 
             teamList = new ArrayList<>();
             getTeamListById(Global.userID);
             teamAdapter = new TeamAdapter(requireContext(), teamList);
 
             todoListView.setAdapter(teamAdapter);
+
+
+            //Added By Hong Weijun 可删 upd: 现在别删了
+            teamEmptyView = view.findViewById(R.id.teamEmptyView);
+            //todoEmptyView.setText("敬请期待");
+            todoListView.setEmptyView(teamEmptyView);
 
             todoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @SuppressLint("SetTextI18n")
@@ -387,6 +393,8 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
             todoListView.setAdapter(todoAdapter);
             todoAdapter.setTmType(tmType);
             todoAdapter.setTmid(tmid);
+
+            todoListView.setEmptyView(view.findViewById(R.id.todoEmptyView));
 
             backButton.setOnClickListener(new View.OnClickListener() {
                 @Override
