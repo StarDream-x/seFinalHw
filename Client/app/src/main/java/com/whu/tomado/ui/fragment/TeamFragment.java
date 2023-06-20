@@ -352,6 +352,11 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
             view.findViewById(R.id.todoEmptyView).setVisibility(View.GONE);
             view.findViewById(R.id.addTodoButton).setVisibility(View.GONE);
             view.findViewById(R.id.backButton).setVisibility(View.GONE);
+            
+            //Added By Hong Weijun 可删 upd: 现在别删了
+            teamEmptyView = view.findViewById(R.id.teamEmptyView);
+            //todoEmptyView.setText("敬请期待");
+            todoListView.setEmptyView(teamEmptyView);
 
             teamList = new ArrayList<>();
             getTeamListById(Global.userID);
@@ -360,10 +365,6 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
             todoListView.setAdapter(teamAdapter);
 
 
-            //Added By Hong Weijun 可删 upd: 现在别删了
-            teamEmptyView = view.findViewById(R.id.teamEmptyView);
-            //todoEmptyView.setText("敬请期待");
-            todoListView.setEmptyView(teamEmptyView);
 
             todoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @SuppressLint("SetTextI18n")
@@ -394,7 +395,7 @@ public class TeamFragment extends Fragment implements AddTodoTask.OnTaskComplete
             todoAdapter.setTmType(tmType);
             todoAdapter.setTmid(tmid);
 
-            todoListView.setEmptyView(view.findViewById(R.id.todoEmptyView));
+//            todoListView.setEmptyView(view.findViewById(R.id.todoEmptyView));
 
             backButton.setOnClickListener(new View.OnClickListener() {
                 @Override

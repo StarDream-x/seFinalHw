@@ -28,7 +28,8 @@
             android:text="当前暂无任务，请点击下方按钮添加"
             android:textAlignment="center"
             android:textColor="@color/background"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone"/>
 
         <!--    teamEmptyView，要求在页面上方的中心-->
         <TextView
