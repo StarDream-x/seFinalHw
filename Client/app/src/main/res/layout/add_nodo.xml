@@ -58,11 +58,12 @@
         android:id="@+id/taskCycleTotEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:digits="0123456789"
+        android:inputType="number"
+        android:maxLength="5"
         android:visibility="gone"
         android:layout_marginTop="6dp"
         android:hint="重复次数"
-        android:digits="0123456789"
-        android:inputType="number"
         android:textSize="18dp"/>
 
     <!--    &lt;!&ndash; 任务周期 &ndash;&gt;-->

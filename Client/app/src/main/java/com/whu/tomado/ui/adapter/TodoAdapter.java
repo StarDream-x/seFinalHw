@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -33,12 +34,14 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
     private Context context;
 
     private int tmType = 1;
+    private long tmid = -1;
 
     private int unfinishedTaskCount = 0;
 
     public void setTmType(int tmType) {
         this.tmType = tmType;
     }
+    public void setTmid(long tmid) {this.tmid = tmid;}
 
     public int getUnfinishedTaskCount() {
         return unfinishedTaskCount;
@@ -168,6 +171,33 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
                     ((CheckBox) v).setChecked(false);
                 else
                 {
+                    if(unfinishedTaskCount-1 <= todoList.size() )
+                    {
+                        todo.setDone(true);
+
+                        taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                        taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                        taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
+                        taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        todoList.remove(todo);
+                        todoList.add(unfinishedTaskCount-1,todo);
+//                    todoList.add(0,todo);
+                        unfinishedTaskCount--;
+                        //Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(getContext(), "服务器错误，请重试", Toast.LENGTH_SHORT).show();
+                        ((CheckBox) v).setChecked(false);
+                    }
+                }
+            }
+            else
+            {
+                if(unfinishedTaskCount-1 <= todoList.size() )
+                {
                     todo.setDone(true);
 
                     taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
@@ -181,23 +211,12 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
                     todoList.add(unfinishedTaskCount-1,todo);
 //                    todoList.add(0,todo);
                     unfinishedTaskCount--;
+                    //Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
                 }
-            }
-            else
-            {
-                todo.setDone(true);
-
-                taskNameTextView.setTextColor(context.getResources().getColor(R.color.half_black));
-                taskNotesTextView.setTextColor(context.getResources().getColor(R.color.half_black));
-                taskTimeTextView.setTextColor(context.getResources().getColor(R.color.half_black));
-                taskNameTextView.setPaintFlags(taskNameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                taskNotesTextView.setPaintFlags(taskNotesTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                taskTimeTextView.setPaintFlags(taskTimeTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-                todoList.remove(todo);
-                todoList.add(unfinishedTaskCount-1,todo);
-//                todoList.add(0,todo);
-                unfinishedTaskCount--;
+                else {
+                    Toast.makeText(getContext(), "服务器错误，请重试", Toast.LENGTH_SHORT).show();
+                    ((CheckBox) v).setChecked(false);
+                }
             }
         } else {
             // 如果未选中，就把任务从任务列表中移除，再添加到任务列表的unfinishedTaskCount位置
@@ -228,7 +247,9 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         String url = context.getResources().getString(R.string.server_url) + "todos/" + todo.getId();
         try {
             jsonObject.put("id", todo.getId());
-            jsonObject.put("userId", Global.userID + "");
+            if(tmid >= 0){
+                jsonObject.put("userId", Global.userUpLimit + tmid);
+            }else{jsonObject.put("userId", Global.userID + "");}
             jsonObject.put("taskName", todo.getTaskName());
             jsonObject.put("taskTime", todo.getTaskTime());
             jsonObject.put("taskNotes", todo.getTaskNotes());

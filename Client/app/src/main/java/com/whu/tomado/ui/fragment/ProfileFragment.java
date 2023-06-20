@@ -258,8 +258,8 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
     private void openHelp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("关于");
-        builder.setMessage("作者：SE7组\n简介：tomado是一个简单而强大的事务管理应用，帮助您管理日常任务和提高工作效率。");
+        builder.setTitle("关于Tomado");
+        builder.setMessage("掌握时间，掌控未来\n\n作者：SE7组\n\n简介：tomado是一个简单而强大的事务管理应用，帮助您管理日常任务和提高工作效率。");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -271,8 +271,8 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
 
     private void openLogout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("登出");
-        builder.setMessage("确定要登出吗？");
+        builder.setTitle("退出");
+        builder.setMessage("确定要退出登录吗？");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -282,7 +282,7 @@ public class ProfileFragment extends Fragment implements LoginTask.OnTaskComplet
                 setUsername("未登录");
                 Global.userName="未登录";
                 Global.userID=0;
-                Toast.makeText(getActivity(), "登出成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "退出登录成功", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });

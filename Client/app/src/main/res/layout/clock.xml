@@ -36,7 +36,8 @@
         android:layout_above="@id/midLine"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:text="Start"
+        android:text="开始"
+        android:textSize="16dp"
         android:alpha="0.7"/>
 
     <View
@@ -55,7 +56,8 @@
         android:layout_below="@id/startButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:text="Reset"
+        android:text="重置"
+        android:textSize="16dp"
         android:alpha="0.7" />
 
 </RelativeLayout>

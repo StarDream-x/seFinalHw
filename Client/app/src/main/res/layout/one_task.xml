@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/half_background"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:alpha="0.85">
 <!--    在左边添加一个可点击的checkBox-->
 
     <!--    当该项内容为空时，不显示-->

@@ -127,6 +127,12 @@ public class NodoTaskViewUtils {
 //        String taskCycleTime_string = taskCycleTimeEditText.getText().toString();
         boolean taskRepeat = taskRepeatCheckBox.isChecked();
 
+        if(old_nodo.getTaskName() != taskName || old_nodo.getTaskTime() != taskTime || old_nodo.isTaskRepeat() != taskRepeat)
+        {
+            new_nodo=true;
+            old_nodo = new Nodo();
+        }
+
         // taskName为空
         if (taskName.isEmpty()) {
             Warning("任务名不能为空",context);
